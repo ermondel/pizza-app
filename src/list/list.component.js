@@ -16,7 +16,7 @@ class List extends Component {
 		return `
 <header>
 	<nav>
-		<div id="box-logo"><a href="/" tabindex="0" aria-label="home"><img src="${listPictures['logo.png']}" alt="logotype"></a></div>
+		<div id="box-logo"><a href="#/" tabindex="0" aria-label="home"><img src="${listPictures['logo.png']}" alt="logotype"></a></div>
 		<div id="box-time"><span>12:12:12</span></div>
 		<div id="box-login"><a href="#/signin" tabindex="0">Login</a></div>
 	</nav>

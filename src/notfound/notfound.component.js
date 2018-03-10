@@ -16,7 +16,7 @@ class Notfound extends Component {
 		return `
 		<h1>404 Not found</h1>
 		<ul>
-			<li><a href="/" title="Home">Home</a></li>
+			<li><a href="#/" title="Home">Home</a></li>
 			<li><a href="#/signin" title="Sign in">Sign in</a></li>
 			<li><a href="#/signup" title="Sign up">Sign up</a></li>
 		</ul>`;
