@@ -1,10 +1,10 @@
 /**
- * bar.component.js
+ * none.component.js
  * version 0.1
  */
-import Component from '../component';
+import Component from '../../component';
 
-class Notfound extends Component {
+class None extends Component {
 	constructor(props) {
 		super(props);
 
@@ -23,4 +23,4 @@ class Notfound extends Component {
 	}
 }
 
-export default Notfound;
+export default None;

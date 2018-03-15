@@ -1,19 +1,16 @@
 /**
- * utils.js
- * version 0.2
- */
-
-/**
- * splitPath
- * return Array
+ * URL path from string to array with the del of empty values
+ * return array
  */
 export const splitPath = (path) => {
 	return path.split('/').filter(str => str.trim().length > 0);
 };
 
 /**
- * equalPaths
- * return Object
+ * Compare two arrays of paths
+ * return object
+ *	result boolean
+ *	params object(set)
  */
 export const equalPaths = (a, b) => {
 	// object with result for return

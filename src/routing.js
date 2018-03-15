@@ -1,13 +1,8 @@
-/**
- * routing.js
- * version 0.1
- */
-
 import Router            from './router';
-import SignupComponent   from './signup/signup.component';
-import SigninComponent   from './signin/signin.component';
-import ListComponent     from './list/list.component';
-import NotfoundComponent from './notfound/notfound.component';
+import SignupComponent   from './components/signup/signup.component';
+import SigninComponent   from './components/signin/signin.component';
+import ListComponent     from './components/list/list.component';
+import NoneComponent     from './components/none/none.component';
 import { listGuard }     from './list-guard';
 import { isAuthorized }  from './is-authorized';
 
@@ -37,7 +32,7 @@ export const APP_ROUTER = new Router({
 		{
 			id: "Not found",
 			path: "/404",
-			component: NotfoundComponent,
+			component: NoneComponent,
 		},
 	],
 	container: document.getElementById('body'),

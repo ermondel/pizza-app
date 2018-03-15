@@ -1,16 +1,19 @@
 /**
  * component.js
- * version 0.1
+ * version 1.4
  */
 class Component {
 	constructor(props) {
 		this.state = {};
 		this.props = props || {};
 		this.container = null;
+		this.inner = null;
 	}
 
 	updateState(nextState) {
+		this.onBeforeUpdate(nextState);
 		this.state = Object.assign({}, this.state, nextState);
+		this.onAfterUpdate(nextState);
 		return this.display();
 	}
 
@@ -20,23 +23,31 @@ class Component {
 	}
 
 	display() {
-		const children = this.render();
+		const html = this.render();
 
 		this.container.innerHTML = '';
 
-		if (typeof children === 'string') {
-      		this.container.innerHTML = children;
-    	} else if (Array.isArray(children)) {
-    		for (let child of children) child && this.container.appendChild(child);
+		let box = this.inner || this.container;
+
+		if (typeof html === 'string') {
+      		box.innerHTML = html;
+    	} else if (Array.isArray(html)) {
+    		for (let elem of html) elem && box.appendChild(elem);
     	} else {
-      		this.container.appendChild(children);
+      		box.appendChild(html);
     	}
-    	
+
+		this.inner && this.container.appendChild(box);
+		
 		return this.container;
 	}
 
 	//
 	render() {}
+
+	onAfterUpdate(nextState) {}
+
+	onBeforeUpdate(nextState) {}
 }
 
 export default Component;

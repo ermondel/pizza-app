@@ -2,7 +2,7 @@
  * signup.form.component.js
  * version 0.1
  */
-import Component from '../component';
+import Component from '../../component';
 
 class SignupForm extends Component {
 	constructor(props) {
