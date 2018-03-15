@@ -1,17 +1,18 @@
 /**
- * signin.component.js
- * version 0.1
+ * Signin Component
+ * version 0.7
  */
-import Component from '../../component';
-import SigninForm from './signin.form.component';
+import Component        from '../../component';
+import SigninForm       from './signin.form.component';
+import { AUTH_SERVICE } from '../../services/auth.service';
+import { APP_ROUTER }   from '../../routing';
 
 class Signin extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			username: '',
-			password: '',
+			messages: [],
 		};
 
 		this.container = document.createElement('main');
@@ -23,19 +24,22 @@ class Signin extends Component {
 	}
 
 	onSubmitForm(username, password) {
-		//
-		localStorage.setItem('pizza-app', 'true');
-		window.location.hash = '#/list';
-		return;
-		//
-		this.updateState({ username, password });
+		AUTH_SERVICE.login({ username, password }).then(data => {
+			if (data.success) {
+				APP_ROUTER.navigateTo('/404');
+			} else {
+				this.updateState({ messages: [ data.error ] });
+			}
+		}).catch(() => {
+			this.updateState({ messages: [ 'Server is not available.' ] });
+		});
 	}
 
 	render() {
-		const { username, password } = this.state;
+		const { messages } = this.state;
 
 		return [
-			this.signinForm.update({ username, password }),
+			this.signinForm.update({ messages }),
 		];
 	}
 }

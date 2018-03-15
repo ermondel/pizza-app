@@ -3,8 +3,8 @@ import SignupComponent   from './components/signup/signup.component';
 import SigninComponent   from './components/signin/signin.component';
 import ListComponent     from './components/list/list.component';
 import NoneComponent     from './components/none/none.component';
-import { listGuard }     from './list-guard';
-import { isAuthorized }  from './is-authorized';
+import { listGuard }     from './services/list-guard';
+import { isAuthorized }  from './services/is-authorized';
 
 export const APP_ROUTER = new Router({
 	map:

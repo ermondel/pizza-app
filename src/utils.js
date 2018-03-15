@@ -1,4 +1,24 @@
 /**
+ * Validate the value of the input according to the rules
+ * return string with error message or empty string
+ * example
+ * username:
+ *		required : { rule: true,    message: 'Username is required.' }
+ *		min      : { rule: 6,       message: 'Username must be min 6 chars.' }
+ *		max      : { rule: 66,      message: 'Username must be shorter than 66 chars.' }
+ *		pattern  : { rule: /^\w+$/, message: 'Username must be alphanumeric word.' }
+ */
+export const validateInput = (input, value, map) => {
+	input = map[input];
+	if (input.required && input.required.rule === true && value.length < 1) return input.required.message;
+	if (input.min && value.length > 0 && value.length < input.min.rule) return input.min.message;
+	if (input.max && value.length > 0 && value.length > input.max.rule) return input.max.message;
+	if (input.pattern && value.length > 0 && value.search(input.pattern.rule) < 0) return input.pattern.message;
+	return '';
+}
+
+
+/**
  * URL path from string to array with the del of empty values
  * return array
  */
