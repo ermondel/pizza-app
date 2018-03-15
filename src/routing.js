@@ -3,8 +3,7 @@ import SignupComponent   from './components/signup/signup.component';
 import SigninComponent   from './components/signin/signin.component';
 import ListComponent     from './components/list/list.component';
 import NoneComponent     from './components/none/none.component';
-import { listGuard }     from './services/list-guard';
-import { isAuthorized }  from './services/is-authorized';
+import { AUTH_SERVICE }  from './services/auth.service';
 
 export const APP_ROUTER = new Router({
 	map:
@@ -27,7 +26,7 @@ export const APP_ROUTER = new Router({
 			id: "List",
 			path: "/list",
 			component: ListComponent,
-			canActivate: isAuthorized
+			canActivate: (params) => AUTH_SERVICE.isAuthorized(),
 		},
 		{
 			id: "Not found",

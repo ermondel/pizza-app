@@ -1,6 +1,6 @@
 /**
  * Auth Service
- * version 0.4
+ * version 0.7
  */
 class AuthService {
 	constructor() {
@@ -35,7 +35,7 @@ class AuthService {
 	}
 
 	tokenExpired() {
-		return this.token ? Date.now() > (this.claims.exp * 1000) : false;
+		return this.token ? Date.now() > (this.claims.exp * 1000) : true;
 	}
 
 	clearStorage() {
