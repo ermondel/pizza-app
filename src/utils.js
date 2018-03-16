@@ -1,22 +1,33 @@
 /**
- * Validate the value of the input according to the rules
- * return string with error message or empty string
- * example
- * username:
- *		required : { rule: true,    message: 'Username is required.' }
- *		min      : { rule: 6,       message: 'Username must be min 6 chars.' }
- *		max      : { rule: 66,      message: 'Username must be shorter than 66 chars.' }
- *		pattern  : { rule: /^\w+$/, message: 'Username must be alphanumeric word.' }
+ * emailregex.com
  */
-export const validateInput = (input, value, map) => {
-	input = map[input];
-	if (input.required && input.required.rule === true && value.length < 1) return input.required.message;
-	if (input.min && value.length > 0 && value.length < input.min.rule) return input.min.message;
-	if (input.max && value.length > 0 && value.length > input.max.rule) return input.max.message;
-	if (input.pattern && value.length > 0 && value.search(input.pattern.rule) < 0) return input.pattern.message;
-	return '';
+export const emailregex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+/**
+ * Arrays (first or second) to html ul list
+ * return string with ul (or empty)
+ */
+export const arraysHTMLlist = (a, b) => {
+	if (!a && !b) return '';
+	let res = [];
+	if (b && b.length) res = b;
+	if (a && a.length) res = a;
+	return res.length ? '<ul>' + res.map(v => v.length ? `<li>${v}</li>` : ``).join('') + '</ul>' : '';
 }
 
+/**
+ * Validate the value according to the rule
+ * return string with error message (invalid) or empty string (valid)
+ */
+export const validateInput = (claim, value, value_repeat) => {
+	if (!claim) return 'Rule not found.';
+	if (claim.required && claim.required.rule === true && value.length < 1) return claim.required.message;
+	if (claim.min && value.length > 0 && value.length < claim.min.rule) return claim.min.message;
+	if (claim.max && value.length > 0 && value.length > claim.max.rule) return claim.max.message;
+	if (claim.pattern && value.length > 0 && value.search(claim.pattern.rule) < 0) return claim.pattern.message;
+	if (claim.equal && value.length > 0 && claim.equal.rule === true && value !== value_repeat) return claim.equal.message;
+	return '';
+}
 
 /**
  * URL path from string to array with the del of empty values

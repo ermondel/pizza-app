@@ -49,11 +49,19 @@ class AuthService {
 		localStorage.removeItem('claims');
 	}
 
+	getClaims(token) {
+		if (token) 
+		{
+			let base64URL = token.split('.')[1];
+			let base64 = base64URL.replace('-', '+').replace('_', '/');
+			return JSON.parse(window.atob(base64));
+		}
+		return {};
+	}
+
 	login(userData) {
-		return fetch('http://localhost:8080/tsttmp/myjson/pizza-app/successful.json').then(response => {
-			if (response.status == 200) {
-				return response.json();
-			}
+		return fetch('http://localhost:8080/tsttmp/myjson/pizza-app/login/successful.json').then(response => {
+			if (response.status == 200) return response.json();
 			throw new Error();
 		}).then(data => {
 			if (data.success) {
@@ -64,14 +72,11 @@ class AuthService {
 		});
 	}
 
-	getClaims(token) {
-		if (token) 
-		{
-			let base64URL = token.split('.')[1];
-			let base64 = base64URL.replace('-', '+').replace('_', '/');
-			return JSON.parse(window.atob(base64));
-		}
-		return {};
+	register(userData) {
+		return fetch('http://localhost:8080/tsttmp/myjson/pizza-app/register/successful.json').then(response => {
+			if (response.status == 200) return response.json();
+			throw new Error();
+		});
 	}
 }
 

@@ -1,12 +1,12 @@
 /**
  * Signin Form
- * version 0.9
+ * version 1.0
  * props
- *	messages
+ *	validations
  *	onSubmitForm
  */
 import Component from '../../component';
-import { validateInput } from '../../utils';
+import { validateInput, arraysHTMLlist } from '../../utils';
 
 class SigninForm extends Component {
 	constructor(props) {
@@ -15,14 +15,14 @@ class SigninForm extends Component {
 		this.state = {
 			username: '',
 			password: '',
-			messages: [],
+			validations: [],
 		};
 
 		this.rules = {
 			username: {
 				required: { rule: true, message: 'Username is required.' },
 				min: { rule: 2, message: 'Username is not valid. Min length is 2.' },
-				max: { rule: 24, message: 'Username is not valid. Max length is 2.' },
+				max: { rule: 24, message: 'Username is not valid. Max length is 24.' },
 				pattern: { rule: /^\w+$/, message: 'Username must be alphanumeric word.' },
 			},
 			password: {
@@ -44,42 +44,36 @@ class SigninForm extends Component {
 		const username  = e.target.elements.username.value.trim();
 		const password  = e.target.elements.password.value.trim();
 
-		let messages = [
-			validateInput('username', username, this.rules), 
-			validateInput('password', password, this.rules),
+		let validations = [
+			validateInput(this.rules['username'], username),
+			validateInput(this.rules['password'], password),
 		];
+		validations = validations.filter(str => str.trim().length > 0);
 
-		if (messages.join('').length) 
-		{
-			this.updateState({ username, password, messages });
-		} else 
-		{
-			this.updateState({ username, password, messages: [] });
-			this.props.onSubmitForm(username, password);
-		}
+		this.updateState({ username, password, validations });
+
+		if (!validations.length) this.props.onSubmitForm(username, password);
 	}
 
 	handlerFocus(e) {
-		document.getElementById('auth-messages').innerHTML = '';
+		document.getElementById('auth-validations').innerHTML = '';
 	}
 
 	render() {
-		const { username, password, messages } = this.state;
+		const { username } = this.state;
+		const { password } = this.state;
 
-		let mes = messages.length ? messages : (this.props.messages || []);
-		mes = mes.length ? '<ul>' + mes.map(val => val.length ? `<li>${val}</li>` : ``).join('') + '</ul>' : '';
+		const un = username ? `value="${username}"` : '';
+		const ps = password ? `value="${password}"` : '';
 
 		return `
-		<h1>Sign in</h1>
-		or <a href="#/signup" title="sign up">sign up</a>
-		<form id="signinform">
-			<label><span>username</span> 
-			<input type="text" id="username" name="username"${(username ? `value="${username}"` : ``)}></label>
-			<label><span>password</span> 
-			<input type="password" id="password" name="password"${(password ? `value="${password}"` : ``)}></label>
+		<h1>Sign in</h1> or <a href="#/signup" title="sign up">sign up</a>
+		<form>
+			<label><span>username</span><input type="text" id="username" name="username"${un}></label>
+			<label><span>password</span><input type="password" id="password" name="password"${ps}></label>
 			<button>Sign in</button>
 		</form>
-		<div id="auth-messages">${mes}</div>`;
+		<div id="auth-validations">${arraysHTMLlist(this.state.validations, this.props.validations)}</div>`;
 	}
 }
 

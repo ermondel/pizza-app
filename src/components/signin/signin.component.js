@@ -1,6 +1,6 @@
 /**
  * Signin Component
- * version 0.7
+ * version 1.0
  */
 import Component        from '../../component';
 import SigninForm       from './signin.form.component';
@@ -12,7 +12,7 @@ class Signin extends Component {
 		super(props);
 
 		this.state = {
-			messages: [],
+			validations: [],
 		};
 
 		this.container = document.createElement('main');
@@ -25,21 +25,23 @@ class Signin extends Component {
 
 	onSubmitForm(username, password) {
 		AUTH_SERVICE.login({ username, password }).then(data => {
-			if (data.success) {
-				APP_ROUTER.navigateTo('/404');
+			const { success, error } = data;
+
+			if (success) {
+				APP_ROUTER.navigateTo('/user');
 			} else {
-				this.updateState({ messages: [ data.error ] });
+				this.updateState({ validations: [ error ] });
 			}
 		}).catch(() => {
-			this.updateState({ messages: [ 'Server is not available.' ] });
+			this.updateState({ validations: [ 'Server is not available.' ] });
 		});
 	}
 
 	render() {
-		const { messages } = this.state;
+		const { validations } = this.state;
 
 		return [
-			this.signinForm.update({ messages }),
+			this.signinForm.update({ validations }),
 		];
 	}
 }

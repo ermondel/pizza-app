@@ -187,18 +187,23 @@ border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
 box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75); }
 #auth span { margin-bottom: 0.5em; display: block; }
 #auth label { margin-bottom: 1.5em; display: block; }
-#auth button {  border: none; cursor: pointer; display: block; font-size: 1em; padding: 18px 24px; color: white;
+#auth button { border: none; cursor: pointer; display: block; font-size: 1em; padding: 18px 24px; color: white;
 background-color: #89C040; margin-top: 45px; border-radius: 5px;  -moz-border-radius: 5px; -webkit-border-radius: 5px;
 -webkit-box-shadow: 1px 1px 2px 0px rgba(138,138,138,1);
 -moz-box-shadow: 1px 1px 2px 0px rgba(138,138,138,1);
 box-shadow: 1px 1px 2px 0px rgba(138,138,138,1); }
 #auth button:hover { background-color: #FF6600; }
 #auth button:focus { outline: none; background-color: #FF6600; }
-#auth #auth-messages { margin-top: 35px; background-color: #455A64; color: white;
+
+/* Authentication messages
+========================================================================== */
+#auth #auth-validations { margin-top: 35px; background-color: #455A64; color: white;
 border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
-#auth #auth-messages ul  { margin: 0; padding: 13px 15px; list-style: none; }
-#auth #auth-messages li { margin: 0; padding: 5px 0px; }
-#auth #auth-messages li:before { content: '\2711'; margin-right: 5px; font-size: 1.1em; }
+#auth #auth-validations ul  { margin: 0; padding: 13px 15px; list-style: none; }
+#auth #auth-validations li { margin: 0; padding: 5px 0px; }
+#auth #auth-validations li:before { content: '\2711'; margin-right: 5px; font-size: 1.1em; }
+#auth #auth-messages { margin-top: 35px; background-color: #89C040; color: white; padding: 13px 15px;
+border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
 
 /* Not found
 ========================================================================== */
