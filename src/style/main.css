@@ -177,28 +177,33 @@ footer { background-color: #455A64; color: white; }
 
 /* Authentication
 ========================================================================== */
-#authentication { width: 300px; margin: 0px auto; padding: 25px 10px 65px 10px; color: #455A64; }
-#authentication a:hover { color: #FF6600; text-decoration: none; }
-#authentication form { margin-top: 45px; }
-#authentication input { width: 91%; border: 0px solid #000000; padding: 4%; 
+#auth { width: 300px; margin: 0px auto; padding: 25px 10px 55px 10px; color: #455A64; }
+#auth a:hover { color: #FF6600; text-decoration: none; }
+#auth form { margin-top: 45px; }
+#auth input { width: 91%; border: 0px solid #000000; padding: 4%; 
 border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
 -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
 box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75); }
-#authentication span { margin-bottom: 0.5em; display: block; }
-#authentication label { margin-bottom: 1.5em; display: block; }
-#authentication button {  border: none; cursor: pointer; display: block; font-size: 1em; padding: 18px 24px; color: white;
+#auth span { margin-bottom: 0.5em; display: block; }
+#auth label { margin-bottom: 1.5em; display: block; }
+#auth button {  border: none; cursor: pointer; display: block; font-size: 1em; padding: 18px 24px; color: white;
 background-color: #89C040; margin-top: 45px; border-radius: 5px;  -moz-border-radius: 5px; -webkit-border-radius: 5px;
 -webkit-box-shadow: 1px 1px 2px 0px rgba(138,138,138,1);
 -moz-box-shadow: 1px 1px 2px 0px rgba(138,138,138,1);
 box-shadow: 1px 1px 2px 0px rgba(138,138,138,1); }
-#authentication button:hover { background-color: #FF6600; }
-#authentication button:focus { outline: none; background-color: #FF6600; }
+#auth button:hover { background-color: #FF6600; }
+#auth button:focus { outline: none; background-color: #FF6600; }
+#auth #auth-messages { margin-top: 35px; background-color: #455A64; color: white;
+border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+#auth #auth-messages ul  { margin: 0; padding: 13px 15px; list-style: none; }
+#auth #auth-messages li { margin: 0; padding: 5px 0px; }
+#auth #auth-messages li:before { content: '\2711'; margin-right: 5px; font-size: 1.1em; }
 
 /* Not found
 ========================================================================== */
-#notfound { width: 300px; margin: 0px auto; padding: 25px 10px 65px 10px; color: #455A64; }
-#notfound ul, #notfound ul li { margin: 0; padding: 0; list-style: none; }
-#notfound ul li { margin-bottom: 0.7em; }
-#notfound ul li a { color: #455A64; }
-#notfound ul li a:hover { color: #FF6600; text-decoration: none; }
+#util { width: 300px; margin: 0px auto; padding: 25px 10px 65px 10px; color: #455A64; }
+#util ul, #util ul li { margin: 0; padding: 0; list-style: none; }
+#util ul li { margin-bottom: 0.7em; }
+#util ul li a { color: #455A64; }
+#util ul li a:hover { color: #FF6600; text-decoration: none; }

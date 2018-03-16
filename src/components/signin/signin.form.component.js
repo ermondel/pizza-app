@@ -33,7 +33,7 @@ class SigninForm extends Component {
 		};
 
 		this.container = document.createElement('div');
-		this.container.id = 'authentication';
+		this.container.id = 'auth';
 		this.container.addEventListener('submit', this.handlerSubmit.bind(this));
 		this.container.addEventListener('focusin', this.handlerFocus.bind(this));
 	}
@@ -60,7 +60,7 @@ class SigninForm extends Component {
 	}
 
 	handlerFocus(e) {
-		document.getElementById('signin-messages').innerHTML = '';
+		document.getElementById('auth-messages').innerHTML = '';
 	}
 
 	render() {
@@ -79,7 +79,7 @@ class SigninForm extends Component {
 			<input type="password" id="password" name="password"${(password ? `value="${password}"` : ``)}></label>
 			<button>Sign in</button>
 		</form>
-		<div id="signin-messages">${mes}</div>`;
+		<div id="auth-messages">${mes}</div>`;
 	}
 }
 

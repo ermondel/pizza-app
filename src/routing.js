@@ -3,6 +3,7 @@ import SignupComponent   from './components/signup/signup.component';
 import SigninComponent   from './components/signin/signin.component';
 import ListComponent     from './components/list/list.component';
 import NoneComponent     from './components/none/none.component';
+import LogoutComponent     from './components/logout/logout.component';
 import { AUTH_SERVICE }  from './services/auth.service';
 
 export const APP_ROUTER = new Router({
@@ -32,6 +33,11 @@ export const APP_ROUTER = new Router({
 			id: "Not found",
 			path: "/404",
 			component: NoneComponent,
+		},
+		{
+			id: "Logout",
+			path: "/logout",
+			component: LogoutComponent,
 		},
 	],
 	container: document.getElementById('body'),

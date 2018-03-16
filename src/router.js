@@ -57,7 +57,8 @@ class Router extends Component {
 				activeRoute: route,
 				activeComponent: new route.component(),
 			});
-			
+
+			document.title = 'Pizza App: ' + route.id;
 		} else 
 		{
 			this.navigateTo('/404');

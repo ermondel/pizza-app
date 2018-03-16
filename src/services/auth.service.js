@@ -34,6 +34,10 @@ class AuthService {
 		return true;
 	}
 
+	logout() {
+		this.clearStorage();
+	}
+
 	tokenExpired() {
 		return this.token ? Date.now() > (this.claims.exp * 1000) : true;
 	}
