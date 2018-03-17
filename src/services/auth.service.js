@@ -1,6 +1,6 @@
 /**
  * Auth Service
- * version 0.7
+ * version 0.8
  */
 class AuthService {
 	constructor() {
@@ -74,6 +74,13 @@ class AuthService {
 
 	register(userData) {
 		return fetch('http://localhost:8080/tsttmp/myjson/pizza-app/register/successful.json').then(response => {
+			if (response.status == 200) return response.json();
+			throw new Error();
+		});
+	}
+
+	userinfo() {
+		return fetch('http://localhost:8080/tsttmp/myjson/pizza-app/my_info/successful.json').then(response => {
 			if (response.status == 200) return response.json();
 			throw new Error();
 		});

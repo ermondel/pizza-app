@@ -1,6 +1,6 @@
 /**
- * component.js
- * version 1.4
+ * Component
+ * version 1.7
  */
 class Component {
 	constructor(props) {
@@ -11,14 +11,16 @@ class Component {
 	}
 
 	updateState(nextState) {
-		this.onBeforeUpdate(nextState);
+		this.onBeforeUpdateState(nextState);
 		this.state = Object.assign({}, this.state, nextState);
-		this.onAfterUpdate(nextState);
+		this.onAfterUpdateState(nextState);
 		return this.display();
 	}
 
 	update(nextProps) {
+		this.onBeforeUpdate(nextProps);
 		this.props = Object.assign({}, this.props, nextProps);
+		this.onAfterUpdate(nextProps);
 		return this.display();
 	}
 
@@ -43,11 +45,16 @@ class Component {
 	}
 
 	//
+
 	render() {}
 
-	onAfterUpdate(nextState) {}
+	onBeforeUpdateState(nextState) {}
 
-	onBeforeUpdate(nextState) {}
+	onAfterUpdateState(nextState) {}
+
+	onBeforeUpdate(nextProps) {}
+
+	onAfterUpdate(nextProps) {}
 }
 
 export default Component;

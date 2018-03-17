@@ -1,5 +1,5 @@
 /**
- * list.component.js
+ * List Component
  * version 0.1
  */
 import Component from '../../component';
