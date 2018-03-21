@@ -1,32 +1,52 @@
 /**
- * emailregex.com
+ * Validate form input elements
+ * @elements e.g. event.target.elements
+ * @rules set of rules for checking
+ * return object
+ *	result boolean
+ *	errors array
  */
-export const emailregex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const validateElements = (elements, rules) => {
+	let res = {
+		result: true,
+		errors: [],
+	};
+	
+	for (let prop in rules) {
+		if (elements[prop]) 
+		{
+			let value = elements[prop].value.trim();
+			let claim = rules[prop];
+			
+			if (claim.required && claim.required.rule === true && value.length < 1) {
+				res.result = false;
+				res.errors.push(claim.required.message);
+				continue;
+			}
+			if (claim.min && value.length > 0 && value.length < claim.min.rule) {
+				res.result = false;
+				res.errors.push(claim.min.message);
+				continue;
+			}
+			if (claim.max && value.length > 0 && value.length > claim.max.rule) {
+				res.result = false;
+				res.errors.push(claim.max.message);
+				continue;
+			}
+			if (claim.pattern && value.length > 0 && value.search(claim.pattern.rule) < 0) {
+				res.result = false;
+				res.errors.push(claim.pattern.message);
+				continue;
+			}
+			if (claim.equal && value.length > 0 && elements[claim.equal.rule] && elements[claim.equal.rule].value !== value) {
+				res.result = false;
+				res.errors.push(claim.equal.message);
+				continue;
+			}
+		}
+	}
 
-/**
- * Arrays (first or second) to html ul list
- * return string with ul (or empty)
- */
-export const arraysHTMLlist = (a, b) => {
-	if (!a && !b) return '';
-	let res = [];
-	if (b && b.length) res = b;
-	if (a && a.length) res = a;
-	return res.length ? '<ul>' + res.map(v => v.length ? `<li>${v}</li>` : ``).join('') + '</ul>' : '';
-}
-
-/**
- * Validate the value according to the rule
- * return string with error message (invalid) or empty string (valid)
- */
-export const validateInput = (claim, value, value_repeat) => {
-	if (!claim) return 'Rule not found.';
-	if (claim.required && claim.required.rule === true && value.length < 1) return claim.required.message;
-	if (claim.min && value.length > 0 && value.length < claim.min.rule) return claim.min.message;
-	if (claim.max && value.length > 0 && value.length > claim.max.rule) return claim.max.message;
-	if (claim.pattern && value.length > 0 && value.search(claim.pattern.rule) < 0) return claim.pattern.message;
-	if (claim.equal && value.length > 0 && claim.equal.rule === true && value !== value_repeat) return claim.equal.message;
-	return '';
+	return res;
 }
 
 /**

@@ -197,11 +197,11 @@ box-shadow: 1px 1px 2px 0px rgba(138,138,138,1); }
 
 /* Authentication messages
 ========================================================================== */
-#auth #auth-validations { margin-top: 35px; background-color: #455A64; color: white;
+#auth #form-errors { margin-top: 35px; background-color: #455A64; color: white;
 border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
-#auth #auth-validations ul  { margin: 0; padding: 13px 15px; list-style: none; }
-#auth #auth-validations li { margin: 0; padding: 5px 0px; }
-#auth #auth-validations li:before { content: '\2711'; margin-right: 5px; font-size: 1.1em; }
+#auth #form-errors ul  { margin: 0; padding: 13px 15px; list-style: none; }
+#auth #form-errors li { margin: 0; padding: 5px 0px; }
+#auth #form-errors li li:before { content: '\2711'; margin-right: 5px; font-size: 1.1em; }
 #auth #auth-messages { margin-top: 35px; background-color: #89C040; color: white; padding: 13px 15px;
 border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
 

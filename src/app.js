@@ -1,6 +1,6 @@
 /**
  * App Component
- * version 0.18
+ * version 0.22
  */
 import Component       from './component';
 import HeaderComponent from './components/header/header.component';
@@ -14,6 +14,8 @@ class App extends Component {
         this.state = {
             route: null,
             content: null,
+            userAuth: true,
+            userRole: '',
         };
 
         const { container, routes } = props;
@@ -35,12 +37,12 @@ class App extends Component {
     onRouteChange(route) {
         document.title = 'Pizza App :: ' + route.id;
 
-        const myauyth = true;  // xxx draft
-        const myrole = 'user'; // xxx draft
+        const userAuth = false;  // xxx draft
+        const userRole = 'user'; // xxx draft
 
-        if (!route.allow || myauyth && route.allow.indexOf(myrole)+1)
+        if (!route.allow || userAuth && route.allow.indexOf(userRole)+1)
         {
-            this.updateState({ route, content: new route.component() });
+            this.updateState({ route, userAuth, userRole, content: new route.component() });
         } else 
         {
             this.router.navigateTo('/signin');
@@ -48,10 +50,12 @@ class App extends Component {
     }
 
     render() {
-        const { content } = this.state;
+        const { content }   = this.state;
+        const { userAuth }  = this.state;
+        const { route }     = this.state;
 
         return [
-            this.header.update(),
+            this.header.update({ userAuth, path: route.path }),
             content.update(),
             this.footer.update(),
         ];

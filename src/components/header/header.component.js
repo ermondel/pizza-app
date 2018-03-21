@@ -1,19 +1,41 @@
 /**
  * Header Component
- * version 0.1
+ * version 0.21
+ * props
+ *  userAuth
+ *  path
  */
 import Component from '../../component';
+import HeaderImg from './header-img/*';
 
 class Header extends Component {
     constructor(props) {
         super(props);
 
-        this.container = document.createElement('div');
-        this.container.id = 'header-component';
+        this.container = document.createElement('header');
     }
 
     render() {
-        return '<p>Pizza App :: Header Component</p>';
+        const { userAuth } = this.props;
+        const { path } = this.props;
+
+        let btnTitle =  'Sign in';
+        let btnPath  =  '/signin';
+
+        if (userAuth) {
+            btnTitle =  'Logout';
+            btnPath  =  '/logout';
+        } else if (path === '/signin') {
+            btnTitle =  'Sign up';
+            btnPath  =  '/signup';
+        }
+
+        return `
+        <nav>
+		    <div id="box-logo"><a href="#/" tabindex="0" aria-label="home"><img src="${HeaderImg['logo.png']}" alt="Pizza App Logo"></a></div>
+		    <div id="box-time"><span>XX:XX:XX</span></div>
+            <div id="box-login"><a href="#${btnPath}" tabindex="0" title="${btnTitle}">${btnTitle}</a></div>
+	    </nav>`;
     }
 }
 
