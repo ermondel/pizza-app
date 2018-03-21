@@ -3,10 +3,10 @@
  * version 0.52
  * status codes
  *	1: data waiting
- *	2: display form 
- *	3: server is not available 
- *	4: server reported that the data sent is invalid 
- *	5: registration completed successfully 
+ *	2: display form
+ *	3: server is not available
+ *	4: server reported that the data sent is invalid
+ *	5: registration completed successfully
  */
 import Component  from '../../component';
 import SignupForm from './signup.form.component';
