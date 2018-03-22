@@ -1,14 +1,16 @@
 /**
  * Signup Form
- * version 0.52
+ * version 0.72
  * props
- *	stores array
- *	errors array
- *	onSubmitForm method
+ *	errors
+ *	stores
+ *	waiting
+ *	onSubmitForm
  */
 import Component            from '../../component';
 import { validateElements } from '../../utils';
 import { signupFormRules }  from './signup.form.rules';
+import img_waiting          from '../../style/waiting.gif';
 
 class SignupForm extends Component {
 	constructor(props) {
@@ -27,7 +29,6 @@ class SignupForm extends Component {
 		};
 
 		this.container = document.createElement('div');
-		this.container.id = 'auth';
 		this.container.addEventListener('submit', this.handlerSubmit.bind(this));
 		this.container.addEventListener('focusin', this.handlerFocus.bind(this));
 	}
@@ -35,12 +36,14 @@ class SignupForm extends Component {
 	handlerSubmit(e) {
 		e.preventDefault();
 
-		const store_id  = e.target.elements.store_id.value.trim();
 		const username  = e.target.elements.username.value.trim();
 		const password  = e.target.elements.password.value.trim();
 		const email     = e.target.elements.email.value.trim();
 		const store_password  = e.target.elements.store_password.value.trim();
 		const password_repeat = e.target.elements.password_repeat.value.trim();
+		let store_id    = e.target.elements.store_id.value.trim();
+
+		store_id = parseInt(store_id * 1);
 
 		const res = validateElements(e.target.elements, signupFormRules);
 
@@ -57,6 +60,8 @@ class SignupForm extends Component {
 	}
 
 	render() {
+		if (this.props.waiting) return `<img src="${img_waiting}" alt="waiting">`;
+
 		const { store_id, store_password, username, password, password_repeat, email } = this.state.elements;
 		let { stores } = this.props;
 		let { errors } = this.state;
@@ -67,6 +72,7 @@ class SignupForm extends Component {
 		errors = errors.length ? '<ul>' + errors.map(error => `<li>${error}</li>`).join('') + '</ul>' : '';
 
 		return `
+		<div id="auth">
 		<h1>Sign up</h1>
 		<form>
 			<label>
@@ -95,7 +101,8 @@ class SignupForm extends Component {
 			</label>
 			<button>Sign up</button>
 		</form>
-		<div id="form-errors">${errors}</div>`;
+		<div id="form-errors">${errors}</div>
+		</div>`;
 	}
 }
 

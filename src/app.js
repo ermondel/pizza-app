@@ -1,11 +1,11 @@
 /**
  * App Component
- * version 0.22
+ * version 0.4
  */
 import Component       from './component';
 import HeaderComponent from './components/header/header.component';
 import FooterComponent from './components/footer/footer.component';
-import Router          from './router';
+import { ROUTER }      from './services/router.service';
 
 class App extends Component {
     constructor(props) {
@@ -14,48 +14,34 @@ class App extends Component {
         this.state = {
             route: null,
             content: null,
-            userAuth: true,
-            userRole: '',
         };
 
-        const { container, routes } = props;
-
-        this.container = container;
-        this.router = new Router({ 
-            routes,
-            pages: { page404: '/404' },
-            onRouteChange: this.onRouteChange.bind(this),
-        });
+        this.container = props.container;
         this.header = new HeaderComponent();
         this.footer = new FooterComponent();
+        window.addEventListener('hashchange', this.handlerHashchange.bind(this));
     }
 
     init() {
-        this.router.init();
+        this.handlerHashchange();
     }
 
-    onRouteChange(route) {
-        document.title = 'Pizza App :: ' + route.id;
-
-        const userAuth = false;  // xxx draft
-        const userRole = 'user'; // xxx draft
-
-        if (!route.allow || userAuth && route.allow.indexOf(userRole)+1)
-        {
-            this.updateState({ route, userAuth, userRole, content: new route.component() });
-        } else 
-        {
-            this.router.navigateTo('/signin');
+    handlerHashchange() {
+        const route = ROUTER.getRoute();
+        if (route) {
+            document.title = 'Pizza App :: ' + route.id;
+            const content = new route.component();
+            content.init();
+            this.updateState({ route, content });
         }
     }
 
     render() {
         const { content }   = this.state;
-        const { userAuth }  = this.state;
         const { route }     = this.state;
 
         return [
-            this.header.update({ userAuth, path: route.path }),
+            this.header.update({ userAuth: route.auth, path: route.path }),
             content.update(),
             this.footer.update(),
         ];

@@ -1,6 +1,6 @@
 /**
  * Component
- * version 1.74
+ * version 1.9
  */
 class Component {
 	constructor(props) {
@@ -17,7 +17,6 @@ class Component {
 
 	update(nextProps) {
 		this.props = Object.assign({}, this.props, nextProps);
-		this.onAfterUpdate(nextProps);
 		return this.display();
 	}
 
@@ -45,7 +44,7 @@ class Component {
 
 	render() {}
 
-	onAfterUpdate(nextProps) {}
+	init() {}
 }
 
 export default Component;

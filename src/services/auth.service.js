@@ -1,6 +1,6 @@
 /**
  * Auth Service
- * version 0.84
+ * version 1.12
  */
 class AuthService {
 	constructor() {
@@ -59,6 +59,8 @@ class AuthService {
 		return {};
 	}
 
+	// ---------------------------------------------------------------------------
+
 	login(userData) {
 		return fetch('http://localhost:8080/tsttmp/myjson/pizza-app/login/successful.json').then(response => {
 			if (response.status == 200) return response.json();
@@ -72,7 +74,7 @@ class AuthService {
 		});
 	}
 
-	register(userData) {
+	signup(userData) {
 		return fetch('http://localhost:8080/tsttmp/myjson/pizza-app/register/successful.json').then(response => {
 			if (response.status == 200) return response.json();
 			throw new Error();
@@ -86,12 +88,61 @@ class AuthService {
 		});
 	}
 
-	storeinfo() {
+	getstores() {
 		return fetch('http://localhost:8080/tsttmp/myjson/pizza-app/store_list/successful.json').then(response => {
 			if (response.status == 200) return response.json();
 			throw new Error();
 		});
 	}
+
+	/*
+	// Request body {"username" : "newuser","password":"12345"}
+	login(userData) {
+		return fetch('https://pizza-tele.ga/api/v1/user/login', {
+			method  : 'POST',
+			body    : JSON.stringify(userData),
+			headers : new Headers().append('Content-type', 'application/json'),
+		}).then(response => {
+			// Success Response Status: 200 OK
+			if (response.status == 200) return response.json();
+			throw new Error();
+		}).then(data => {
+			if (data.success) {
+				this.token  = data.token;
+				this.claims = this.getClaims(data.token);
+			}
+			return data;
+		});
+	}
+
+	// Request body {"username":"newuser","password":"12345","password_repeat":"12345","email":"newuser@i.ua","store_id":1,"store_password":"!@#$"}
+	signup(userData) {
+		return fetch('https://pizza-tele.ga/api/v1/user/create', {
+			method  : 'POST',
+			body    : JSON.stringify(userData),
+			headers : new Headers().append('Content-type', 'application/json'),
+		}).then(response => {
+			// Success Response Status: 201 Created
+			if (response.status == 201) return response.json();
+			throw new Error();
+		});
+	}
+
+	userinfo() {
+		return fetch('http://localhost:8080/tsttmp/myjson/pizza-app/my_info/successful.json').then(response => {
+			if (response.status == 200) return response.json();
+			throw new Error();
+		});
+	}
+
+	getstores() {
+		return fetch('https://pizza-tele.ga/api/v1/store/list').then(response => {
+			// Success Response Status: 200 OK
+			if (response.status == 200) return response.json();
+			throw new Error();
+		});
+	}
+	*/
 }
 
 export const AUTH = new AuthService();

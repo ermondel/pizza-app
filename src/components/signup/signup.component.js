@@ -1,71 +1,60 @@
 /**
  * Signup Component
- * version 0.52
- * status codes
- *	1: data waiting
- *	2: display form
- *	3: server is not available
- *	4: server reported that the data sent is invalid
- *	5: registration completed successfully
+ * version 0.72
  */
 import Component  from '../../component';
 import SignupForm from './signup.form.component';
-import SignupInfo from './signup.info.component';
 import { AUTH }   from '../../services/auth.service';
+import { ROUTER } from '../../services/router.service';
 
 class Signup extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			status: 1,
-			validations: [],
+			errors: [],
 			stores: [],
+			waiting: true,
 		};
 
 		this.container = document.createElement('main');
 		this.container.id = 'main';
 
-		this.signupInfo = new SignupInfo();
 		this.signupForm = new SignupForm({
 			onSubmitForm: this.onSubmitForm.bind(this),
 		});
 	}
 
-	onSubmitForm(userData) {
-		AUTH.register(userData).then(data => {
-			if (data.success) {
-				this.updateState({ status: 5 });
+	init() {
+		AUTH.getstores().then(stores => {
+			if (stores && stores.length > 0) {
+				this.updateState({ stores, errors: [], waiting: false });
 			} else {
-				this.updateState({ status: 4, validations: data.validations });
+				ROUTER.navigateTo('/503');
 			}
 		}).catch(error => {
-			this.updateState({ status: 3 });
+			ROUTER.navigateTo('/503');
 		});
 	}
 
-	onAfterUpdate() {
-		AUTH.storeinfo().then(stores => {
-			if (stores && stores.length > 0) {
-				this.updateState({ status: 2, stores });
+	onSubmitForm(userData) {
+		this.updateState({ errors: [], waiting: true });
+
+		AUTH.signup(userData).then(data => {
+			if (data.success) {
+				ROUTER.navigateTo('/signup/successful');
 			} else {
-				this.updateState({ status: 3 });
+				this.updateState({ errors: data.validations, waiting: false });
 			}
 		}).catch(error => {
-			this.updateState({ status: 3 });
+			ROUTER.navigateTo('/503');
 		});
 	}
 
 	render() {
-		const { validations, stores } = this.state;
+		const { errors, stores, waiting } = this.state;
 
-		switch (this.state.status) {
-			case 1: return this.signupInfo.update({ waiting : true });
-			case 2: return this.signupForm.update({ errors  : [], stores });
-			case 3: return this.signupInfo.update({ waiting : false, result: false });
-			case 4: return this.signupForm.update({ errors  : validations, stores });
-			case 5: return this.signupInfo.update({ waiting : false, result: true });
-		}
+		return this.signupForm.update({ errors, stores, waiting });
 	}
 }
 

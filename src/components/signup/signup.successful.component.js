@@ -1,10 +1,10 @@
 /**
- * None Component
+ * Service Unavailable Component
  * version 0.7
  */
 import Component from '../../component';
 
-class None extends Component {
+class SignupSuccessful extends Component {
     constructor(props) {
         super(props);
 
@@ -14,13 +14,13 @@ class None extends Component {
 
     render() {
         return `
-        <div id="info" class="info-404">
+        <div id="info" class="info-successful">
             <div id="info_inner">
-                <h1>404</h1>
-                <p>Not found.</p>
+                <p>Registration completed successfully.</p>
+                <p>Now you can <a href="#/signin" title="sign in">sign in</a>.</p>
             </div>
         </div>`;
     }
 }
 
-export default None;
+export default SignupSuccessful;

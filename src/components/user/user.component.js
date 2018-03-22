@@ -8,8 +8,12 @@ class User extends Component {
     constructor(props) {
         super(props);
 
-        this.container = document.createElement('div');
-        this.container.id = 'user-component';
+        this.container = document.createElement('main');
+		this.container.id = 'main';
+    }
+
+    init() {
+        // AUTH.logout();
     }
 
     render() {
