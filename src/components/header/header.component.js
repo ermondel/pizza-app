@@ -1,6 +1,6 @@
 /**
  * Header Component
- * version 0.21
+ * version 0.4
  * props
  *  userAuth
  *  path
@@ -21,11 +21,11 @@ class Header extends Component {
 
         let btnTitle =  'Sign in';
         let btnPath  =  '/signin';
-
-        if (userAuth) {
+        if (userAuth && path !== '/logout') {
             btnTitle =  'Logout';
             btnPath  =  '/logout';
-        } else if (path === '/signin') {
+        }
+        if (path === '/signin') {
             btnTitle =  'Sign up';
             btnPath  =  '/signup';
         }
