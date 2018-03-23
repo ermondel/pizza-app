@@ -15,23 +15,30 @@ export const routes = [
     {
         id: "Sign up",
         path: "/signup",
-        component: SignupComponent
+        component: SignupComponent,
+        deny: ['authorized_user'],
+        unaccepted: '/user',
     },
     {
         id: "Successful sign up",
         path: "/signup/successful",
-        component: SignupSucComponent
+        component: SignupSucComponent,
+        deny: ['authorized_user'],
+        unaccepted: '/user',
     },
     {
         id: "Sign in",
         path: "/signin",
-        component: SigninComponent
+        component: SigninComponent,
+        deny: ['authorized_user'],
+        unaccepted: '/user',
     },
     {
         id: "List",
         path: "/list",
         component: ListComponent,
-        allow: ['user'],
+        allow: ['authorized_user'],
+        unaccepted: '/signin',
     },
     {
         id: "Logout",
@@ -42,6 +49,8 @@ export const routes = [
         id: "User",
         path: "/user",
         component: UserComponent,
+        allow: ['authorized_user'],
+        unaccepted: '/signin',
     },
     {
         id: "Not found",

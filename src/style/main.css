@@ -1,6 +1,6 @@
 /**
  * main.css
- * version 0.78
+ * version 0.91
  */
 
 /* Fonts
@@ -177,16 +177,24 @@ footer { background-color: #455A64; color: white; }
 
 /* Auth Form (signin and signup)
 ========================================================================== */
-#auth { width: 350px; margin: 0px auto; padding: 25px 10px 55px 10px; color: #455A64; }
-#auth a:hover { color: #FF6600; text-decoration: none; }
-#auth form { margin-top: 45px; }
-#auth input { width: 91%; border: 0px solid #000000; padding: 4%; 
-border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
--webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75); }
-#auth span { margin-bottom: 0.5em; display: block; }
-#auth label { margin-bottom: 1.5em; display: block; }
+/* base */
+#auth { width: 350px; margin: 0px auto; color:grey; }
+#auth h1 { margin: 0; padding: 0; }
+#auth span,
+#auth button,
+#auth label { display: block; }
+/* elements */
+#auth h1 { margin-bottom: 45px; color: #455A64; }
+#auth label { margin-bottom: 35px; }
+#auth span { margin-bottom: 5px; }
+#auth input { width: 100%; height: 25px; border: none; border-bottom: 1px solid lightgrey; }
+#auth input:focus { outline: none; border-bottom: 1px solid #FF6600; }
+/* selectbox */
+#auth label.selectbox { width: 100%; margin-bottom: 35px; }
+#auth label.selectbox span { float: left; margin-right: 15px; }
+#auth label.selectbox select { border: none; padding: 4px 7px; position: relative; top: -5px; }
+#auth label.selectbox select:focus { outline: none; background-color: #455A64; color: white; }
+/* button */
 #auth button { border: none; cursor: pointer; display: block; font-size: 1em; padding: 18px 24px; color: white;
 background-color: #89C040; margin-top: 45px; border-radius: 5px;  -moz-border-radius: 5px; -webkit-border-radius: 5px;
 -webkit-box-shadow: 1px 1px 2px 0px rgba(138,138,138,1);
@@ -194,14 +202,18 @@ background-color: #89C040; margin-top: 45px; border-radius: 5px;  -moz-border-ra
 box-shadow: 1px 1px 2px 0px rgba(138,138,138,1); }
 #auth button:hover { background-color: #FF6600; }
 #auth button:focus { outline: none; background-color: #FF6600; }
+/* form errors */
 #auth #form-errors { margin-top: 35px; background-color: #455A64; color: white;
 border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
 #auth #form-errors ul  { margin: 0; padding: 13px 15px; list-style: none; }
 #auth #form-errors li { margin: 0; padding: 5px 0px; }
 #auth #form-errors li li:before { content: '\2711'; margin-right: 5px; font-size: 1.1em; }
+/* image for load waiting (waiting bar) */
+#waiting { width: 150px; height: 150px; overflow: hidden; margin: 0px auto; }
 
-/* Info messages
+/* Info pages
 ========================================================================== */
+/* base */
 #info { width: 350px; margin: 0px auto; color: #455A64; position: relative; }
 #info #info_inner { background-color: #455A64; color: white; padding: 5px 20px; margin-left: 70px; 
 border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
@@ -210,6 +222,7 @@ border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
 box-shadow: 1px 1px 2px 0px rgba(138,138,138,1); }
 #info #info_inner a { color: white; }
 #info #info_inner a:hover { text-decoration: none; }
+/* special cases */
 #info.info-successful:before { content: '\1F5AB'; position: absolute; top: 8px; left: 0; z-index: 1; font-size: 52px; color: #89C040; }
 #info.info-failed:before { content: '\2BBE'; position: absolute; top: 8px; left: 0; z-index: 1; font-size: 52px; color: tomato; }
 #info.info-logout:before { content: '\25E8'; position: absolute; top: 8px; left: 0; z-index: 1; font-size: 52px; }
@@ -217,8 +230,3 @@ box-shadow: 1px 1px 2px 0px rgba(138,138,138,1); }
 #info.info-404 { text-align: center; }
 #info.info-503:before { content: '\26A0'; position: absolute; top: 8px; left: 0; z-index: 1; font-size: 52px; }
 #info.info-503 { text-align: center; }
-
-/*
-#auth #auth-messages { margin-top: 35px; background-color: #89C040; color: white; padding: 13px 15px;
-	border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
-*/

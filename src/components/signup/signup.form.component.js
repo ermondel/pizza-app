@@ -1,6 +1,6 @@
 /**
  * Signup Form
- * version 0.72
+ * version 0.8
  * props
  *	errors
  *	stores
@@ -60,7 +60,10 @@ class SignupForm extends Component {
 	}
 
 	render() {
-		if (this.props.waiting) return `<img src="${img_waiting}" alt="waiting">`;
+		if (this.props.waiting) return `
+		<div id="waiting">
+			<img src="${img_waiting}" alt="waiting">
+		</div>`;
 
 		const { store_id, store_password, username, password, password_repeat, email } = this.state.elements;
 		let { stores } = this.props;
@@ -75,28 +78,28 @@ class SignupForm extends Component {
 		<div id="auth">
 		<h1>Sign up</h1>
 		<form>
-			<label>
-				<span>Choose store *</span>
+			<label class="selectbox">
+				<span>choose store *</span>
 				<select id="store_id" name="store_id">${stores}</select>
 			</label>
 			<label>
-				<span>Store password *</span>
+				<span>store password *</span>
 				<input type="password" id="store_password" name="store_password"${(store_password ? `value="${store_password}"` : '')}>
 			</label>
 			<label>
-				<span>Username *</span>
+				<span>username *</span>
 				<input type="text" id="username" name="username"${(username ? `value="${username}"` : '')}>
 			</label>
 			<label>
-				<span>Password *</span>
+				<span>password *</span>
 				<input type="password" id="password" name="password"${(password ? `value="${password}"` : '')}>
 			</label>
 			<label>
-				<span>Password repeat *</span>
+				<span>password repeat *</span>
 				<input type="password" id="password_repeat" name="password_repeat"${(password_repeat ? `value="${password_repeat}"` : '')}>
 			</label>
 			<label>
-				<span>Email *</span>
+				<span>email *</span>
 				<input type="text" id="email" name="email"${(email ? `value="${email}"` : '')}>
 			</label>
 			<button>Sign up</button>

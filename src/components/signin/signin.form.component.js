@@ -1,13 +1,15 @@
 /**
  * Signin Form
- * version 0.52
+ * version 0.8
  * props
- *	errors array
- *	onSubmitForm method
+ *	errors
+ *	waiting
+ *	onSubmitForm
  */
 import Component            from '../../component';
 import { validateElements } from '../../utils';
 import { signinFormRules }  from './signin.form.rules';
+import img_waiting          from '../../style/waiting.gif';
 
 class SigninForm extends Component {
 	constructor(props) {
@@ -22,7 +24,6 @@ class SigninForm extends Component {
 		};
 
 		this.container = document.createElement('div');
-		this.container.id = 'auth';
 		this.container.addEventListener('submit', this.handlerSubmit.bind(this));
 		this.container.addEventListener('focusin', this.handlerFocus.bind(this));
 	}
@@ -48,6 +49,11 @@ class SigninForm extends Component {
 	}
 
 	render() {
+		if (this.props.waiting) return `
+		<div id="waiting">
+			<img src="${img_waiting}" alt="waiting">
+		</div>`;
+
 		const { username, password } = this.state.elements;
 		let { errors } = this.state;
 
@@ -55,19 +61,21 @@ class SigninForm extends Component {
 		errors = errors.length ? '<ul>' + errors.map(error => `<li>${error}</li>`).join('') + '</ul>' : '';
 
 		return `
+		<div id="auth">
 		<h1>Sign in</h1>
 		<form>
 			<label>
-				<span>Username *</span>
+				<span>username *</span>
 				<input type="text" id="username" name="username"${(username ? `value="${username}"` : '')}>
 			</label>
 			<label>
-				<span>Password *</span>
+				<span>password *</span>
 				<input type="password" id="password" name="password"${(password ? `value="${password}"` : '')}>
 			</label>
 			<button>Sign in</button>
 		</form>
-		<div id="form-errors">${errors}</div>`;
+		<div id="form-errors">${errors}</div>
+		</div>`;
 	}
 }
 

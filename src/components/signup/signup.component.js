@@ -1,6 +1,6 @@
 /**
  * Signup Component
- * version 0.72
+ * version 0.8
  */
 import Component  from '../../component';
 import SignupForm from './signup.form.component';
