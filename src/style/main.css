@@ -1,6 +1,6 @@
 /**
  * main.css
- * version 0.91
+ * version 0.94
  */
 
 /* Fonts
@@ -196,7 +196,8 @@ footer { background-color: #455A64; color: white; }
 #auth label.selectbox select:focus { outline: none; background-color: #455A64; color: white; }
 /* button */
 #auth button { border: none; cursor: pointer; display: block; font-size: 1em; padding: 18px 24px; color: white;
-background-color: #89C040; margin-top: 45px; border-radius: 5px;  -moz-border-radius: 5px; -webkit-border-radius: 5px;
+background-color: #89C040; margin-top: 45px; 
+border-radius: 5px;  -moz-border-radius: 5px; -webkit-border-radius: 5px;
 -webkit-box-shadow: 1px 1px 2px 0px rgba(138,138,138,1);
 -moz-box-shadow: 1px 1px 2px 0px rgba(138,138,138,1);
 box-shadow: 1px 1px 2px 0px rgba(138,138,138,1); }
@@ -210,6 +211,20 @@ border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; }
 #auth #form-errors li li:before { content: '\2711'; margin-right: 5px; font-size: 1.1em; }
 /* image for load waiting (waiting bar) */
 #waiting { width: 150px; height: 150px; overflow: hidden; margin: 0px auto; }
+
+/* User info
+========================================================================== */
+/* base */
+#userinfo { width: 320px; margin: 0px auto; padding: 15px; color: black; 
+border-radius: 3px;  -moz-border-radius: 3px; -webkit-border-radius: 3px;
+-webkit-box-shadow: 0px 0px 7px 0px rgba(168,168,168,1);
+-moz-box-shadow: 0px 0px 7px 0px rgba(168,168,168,1);
+box-shadow: 0px 0px 7px 0px rgba(168,168,168,1); }
+#userinfo h1 { margin: 0; padding: 0; color:rgba(168,168,168,0.7); }
+/* elements */
+#userinfo h1 { margin-bottom: 30px; }
+#userinfo div { margin-bottom: 30px; font-size: 120%; }
+#userinfo div span { color:grey; }
 
 /* Info pages
 ========================================================================== */
