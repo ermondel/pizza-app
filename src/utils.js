@@ -1,4 +1,25 @@
 /**
+ * Clock XX:XX:XX
+ */
+export const clock = (id) => {
+	const dial = document.getElementById(id);
+	if (dial) {
+		const current_time = new Date();
+
+		let hours   = current_time.getHours();
+		let minutes = current_time.getMinutes();
+		let seconds = current_time.getSeconds();
+
+		hours   = hours   < 10 ? '0'+hours   : hours;
+		minutes = minutes < 10 ? '0'+minutes : minutes;
+		seconds = seconds < 10 ? '0'+seconds : seconds;
+
+		dial.innerHTML = `<span>${hours}:${minutes}:${seconds}</span>`;
+	}
+	setTimeout(clock, 1000, id);
+};
+
+/**
  * Validate form input elements
  * @elements e.g. event.target.elements
  * @rules set of rules for checking
