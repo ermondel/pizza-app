@@ -1,6 +1,6 @@
 /**
  * Auth Service
- * version 1.7
+ * version 1.8
  */
 class AuthService {
 	constructor() {
@@ -14,7 +14,7 @@ class AuthService {
 
 	set token(token) {
 		this._token = token;
-		localStorage.setItem('token', JSON.stringify(token));
+		localStorage.setItem('token', token);
 	}
 
 	get claims() {
