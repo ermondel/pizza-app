@@ -15,7 +15,7 @@ class None extends Component {
     render() {
         return `
         <div id="info" class="info-404">
-            <div id="info_inner">
+            <div id="info_inner" class="box-radius-5 box-shadow-2">
                 <h1>404</h1>
                 <p>Not found.</p>
             </div>

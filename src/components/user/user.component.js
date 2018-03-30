@@ -5,7 +5,7 @@
 import Component   from '../../component';
 import { AUTH }    from '../../services/auth.service';
 import { ROUTER }  from '../../services/router.service';
-import img_waiting from '../../style/waiting.gif';
+import img_waiting from '../../style/img/waiting.gif';
 
 class User extends Component {
     constructor(props) {

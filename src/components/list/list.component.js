@@ -15,7 +15,7 @@ class List extends Component {
 
     render() {
         return `
-        <div id="wrapper-pizza-add"><button class="pizza-add" tabindex="0">+ <span>Add pizza</span></button></div>
+        <div id="wrapper-pizza-add"><button class="pizza-add box-radius-5 box-shadow-2 tabindex="0">+ <span>Add pizza</span></button></div>
 	    <div class="pizzas">
 	        <div class="pizza">
 		        <div class="pizza-img"><a href="#" tabindex="0"><img src="${pizzasPictures['pizza1.jpg']}" alt="Neapolitan Pizza"></a></div>

@@ -10,7 +10,7 @@
 import Component            from '../../component';
 import { validateElements } from '../../utils';
 import { signupFormRules }  from './signup.form.rules';
-import img_waiting          from '../../style/waiting.gif';
+import img_waiting          from '../../style/img/waiting.gif';
 
 class SignupForm extends Component {
 	constructor(props) {
@@ -102,9 +102,9 @@ class SignupForm extends Component {
 				<span>email *</span>
 				<input type="text" id="email" name="email"${(email ? `value="${email}"` : '')}>
 			</label>
-			<button>Sign up</button>
+			<button class="box-radius-5 box-shadow-2">Sign up</button>
 		</form>
-		<div id="form-errors">${errors}</div>
+		<div id="form-errors" class="box-radius-5">${errors}</div>
 		</div>`;
 	}
 }

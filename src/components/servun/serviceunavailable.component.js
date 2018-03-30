@@ -15,7 +15,7 @@ class ServiceUnavailable extends Component {
     render() {
         return `
         <div id="info" class="info-503">
-            <div id="info_inner">
+            <div id="info_inner" class="box-radius-5 box-shadow-2">
                 <h1>503</h1>
                 <p>Service Unavailable.</p>
                 <p>Try again or contact <a href="mailto:ermondel@gmail.com" title="support">support</a>.</p>

@@ -20,7 +20,7 @@ class Logout extends Component {
     render() {
         return `
         <div id="info" class="info-logout">
-            <div id="info_inner">
+            <div id="info_inner" class="box-radius-5 box-shadow-2">
                 <p>You have successfully logged out.</p>
                 <p><a href="#/signin">Sign in</a> again or go to the <a href="#/">main page</a>.</p>
             </div>

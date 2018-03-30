@@ -9,7 +9,7 @@
 import Component            from '../../component';
 import { validateElements } from '../../utils';
 import { signinFormRules }  from './signin.form.rules';
-import img_waiting          from '../../style/waiting.gif';
+import img_waiting          from '../../style/img/waiting.gif';
 
 class SigninForm extends Component {
 	constructor(props) {
@@ -72,9 +72,9 @@ class SigninForm extends Component {
 				<span>password *</span>
 				<input type="password" id="password" name="password"${(password ? `value="${password}"` : '')}>
 			</label>
-			<button>Sign in</button>
+			<button class="box-radius-5 box-shadow-2">Sign in</button>
 		</form>
-		<div id="form-errors">${errors}</div>
+		<div id="form-errors" class="box-radius-5">${errors}</div>
 		</div>`;
 	}
 }
