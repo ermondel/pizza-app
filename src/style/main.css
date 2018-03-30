@@ -1,6 +1,6 @@
 /**
  * Main
- * version 1.0
+ * version 1.1
  */
 html { background-color: #455A64; }
 body { font-family: Arial, sans-serif; font-size: 14px; color: black; background-color: white; }
@@ -178,7 +178,7 @@ box-shadow: 0px 0px 7px 0px rgba(168,168,168,1); }
 /* Info pages
 ========================================================================== */
 /* base */
-#info { width: 350px; margin: 0px auto; color: #455A64; position: relative; }
+#info { width: 350px; margin: 0px auto; color: #455A64; position: relative; word-wrap: break-word; }
 #info #info_inner { background-color: #455A64; color: white; padding: 5px 20px; margin-left: 70px; }
 #info #info_inner a { color: #9fd1e9; text-decoration: none; }
 #info #info_inner a:hover { color: white; text-decoration: underline; }
