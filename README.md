@@ -12,7 +12,6 @@ Pizza App
 | 2 | testusertwo | testusertwo456 |  testusertwo@ukr.net |
 
 ### Pages
-normal menu in header has not yet been made, sorry :-)
 
 Page | Url | Description | Auth required |
 | --- | --- | --- | --- |
