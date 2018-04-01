@@ -1,6 +1,6 @@
 /**
  * Auth Service
- * version 1.8
+ * version 1.84
  */
 class AuthService {
 	constructor() {
@@ -62,7 +62,7 @@ class AuthService {
 	// Request body {"username":"str","password":"str"}
 	signin(userData) {
 		let headers = new Headers();
-		headers.append('Authorization', `Bearer ${this.token}`);
+		headers.append('Authorization', `Bearer ${this.token}`);  // xxx
 		headers.append('content-type', 'application/json');
 
 		const init = {
@@ -72,8 +72,9 @@ class AuthService {
 		};
 
 		return fetch('https://pizza-tele.ga/api/v1/user/login', init).then(response => {
-			// Success Response Status: 200 OK
-			if (response.status == 200) return response.json();
+			// success response status 200 ok  OR  4** client error
+			const status_code = String(response.status).charAt(0);
+			if (response.status == 200 || status_code == 4) return response.json();
 			throw new Error();
 		}).then(data => {
 			if (data.success) {
@@ -84,7 +85,7 @@ class AuthService {
 		});
 	}
 
-	// Request body {"username":"str","password":"str","password_repeat":"str","email":"str","store_id":1,"store_password":"str"}
+	// Request body {"username":"str","password":"str","password_repeat":"str","email":"str","store_id":int,"store_password":"str"}
 	signup(userData) {
 		let headers = new Headers();
 		headers.append('content-type', 'application/json');
@@ -96,8 +97,9 @@ class AuthService {
 		};
 
 		return fetch('https://pizza-tele.ga/api/v1/user/create', init).then(response => {
-			// Success Response Status: 201 Created
-			if (response.status == 201) return response.json();
+			// success response status 201 created  OR  4** client error
+			const status_code = String(response.status).charAt(0);
+			if (response.status == 201 || status_code == 4) return response.json();
 			throw new Error();
 		});
 	}
@@ -114,8 +116,9 @@ class AuthService {
 		};
 
 		return fetch('https://pizza-tele.ga/api/v1/user/my_info', init).then(response => {
-			// Success Response Status: - 200 OK
-			if (response.status == 200) return response.json();
+			// success response status 200 ok  OR  4** client error
+			const status_code = String(response.status).charAt(0);
+			if (response.status == 200 || status_code == 4) return response.json();
 			throw new Error();
 		});
 	}
@@ -123,7 +126,7 @@ class AuthService {
 	// Request body None
 	getstores() {
 		return fetch('https://pizza-tele.ga/api/v1/store/list').then(response => {
-			// Success Response Status: 200 OK
+			// success response status 200 ok
 			if (response.status == 200) return response.json();
 			throw new Error();
 		});

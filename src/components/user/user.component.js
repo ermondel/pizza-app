@@ -1,6 +1,6 @@
 /**
  * User Component
- * version 0.8
+ * version 0.82
  */
 import Component   from '../../component';
 import { AUTH }    from '../../services/auth.service';
@@ -25,7 +25,7 @@ class User extends Component {
             if (!data.error) {
                 this.updateState({ data, waiting: false });
             } else {
-                ROUTER.navigateTo('/user/failed');
+                ROUTER.navigateTo('/signin');
             }
 		}).catch(error => {
 			ROUTER.navigateTo('/503');
