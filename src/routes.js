@@ -3,7 +3,7 @@ import SignupSucComponent from './components/signup/signup.successful.component'
 import SigninComponent    from './components/signin/signin.component';
 import ListComponent      from './components/list/list.component';
 import NoneComponent      from './components/none/none.component';
-import ServUnComponent    from './components/servun/serviceunavailable.component';
+import ServeroffComponent from './components/serveroff/serveroff.component';
 import LogoutComponent    from './components/logout/logout.component';
 import UserComponent      from './components/user/user.component';
 
@@ -60,6 +60,6 @@ export const routes = [
     {
         id: "503 Service Unavailable",
         path: "/503",
-        component: ServUnComponent,
+        component: ServeroffComponent,
     },
 ];

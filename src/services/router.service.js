@@ -1,6 +1,6 @@
 /**
  * Router Service
- * version 0.4
+ * version 0.44
  */
 import { routes } from '../routes';
 import { splitPath, equalPaths } from '../utils';
@@ -9,17 +9,28 @@ import { AUTH } from './auth.service';
 class RouterService {
 	constructor(routes) {
 		this.routes = routes;
+		this._oldURL = '';
 	}
 
 	get path() {
 		return window.location.hash.slice(1);
 	}
 
+	get oldURL() {
+		return this._oldURL;
+	}
+
+	set oldURL(url) {
+		this._oldURL = url;
+	}
+
 	navigateTo(path) {
     	window.location.hash = path;
   	}
 
-	getRoute() {
+	getRoute(HashChangeEvent) {
+		if (HashChangeEvent) this.oldURL = HashChangeEvent.oldURL;
+
 		const path = splitPath(this.path);
 
 		const route = this.routes.find(element => { 

@@ -1,11 +1,11 @@
 /**
- * None (404) Component
+ * Service Unavailable Component
  * version 0.88
  */
 import Component  from '../../component';
 import { ROUTER } from '../../services/router.service';
 
-class None extends Component {
+class Serveroff extends Component {
     constructor(props) {
         super(props);
 
@@ -14,16 +14,18 @@ class None extends Component {
     }
 
     render() {
-        const content =  ROUTER.oldURL ? `<p>This page <a href="${ROUTER.oldURL}">${ROUTER.oldURL}</a> was not found.</p>` : '';
+        const support_mail = 'ermondel@gmail.com';
+        const content = ROUTER.oldURL ? `<p>Service Unavailable.</p>
+        <p><a href="${ROUTER.oldURL}">Try again</a> or contact <a href="mailto:${support_mail}" title="support">support</a>.</p>` : '';
 
         return `
-        <div id="info" class="info-404">
+        <div id="info" class="info-503">
             <div id="info_inner" class="box-radius-5 box-shadow-2">
-                <h1>404</h1>
+                <h1>503</h1>
                 ${content}
             </div>
         </div>`;
     }
 }
 
-export default None;
+export default Serveroff;

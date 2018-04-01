@@ -1,6 +1,6 @@
 /**
  * App Component
- * version 0.42
+ * version 0.44
  */
 import Component       from './component';
 import HeaderComponent from './components/header/header.component';
@@ -27,9 +27,8 @@ class App extends Component {
     }
 
     handlerHashchange(e) {
-        const route = ROUTER.getRoute();
+        const route = ROUTER.getRoute(e);
         if (route) {
-            route.oldURL   = e && e.oldURL ? e.oldURL : null;
             document.title = 'Pizza App :: ' + route.id;
             const content  = new route.component();
             content.init();
@@ -39,13 +38,8 @@ class App extends Component {
 
     render() {
         const { content } = this.state;
-        const { route }   = this.state;
+        const { route } = this.state;
         const props = {};
-
-        // add route in props for auxiliary pages
-        if (['/503','/404'].indexOf(route.path)+1) {
-            props.route = route;
-        }
 
         return [
             this.header.update({ userAuth: route.auth, path: route.path }),
