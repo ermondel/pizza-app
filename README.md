@@ -10,6 +10,7 @@ Pizza App
 | --- | --- | --- | --- |
 | 1 | testuserone | testuserone123 |  testuserone@ukr.net |
 | 2 | testusertwo | testusertwo456 |  testusertwo@ukr.net |
+| 3 | testuserthree | testuserthree789 |  testuserthree@ukr.net |
 
 ### Pages
 
