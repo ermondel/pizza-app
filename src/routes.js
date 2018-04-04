@@ -6,6 +6,7 @@ import NoneComponent      from './components/none/none.component';
 import ServeroffComponent from './components/serveroff/serveroff.component';
 import LogoutComponent    from './components/logout/logout.component';
 import UserComponent      from './components/user/user.component';
+import PizzaComponent     from './components/pizza/pizza.component';
 
 export const routes = [
     {
@@ -61,5 +62,12 @@ export const routes = [
         id: "503 Service Unavailable",
         path: "/503",
         component: ServeroffComponent,
+    },
+    {
+        id: "Add new pizza",
+        path: "/pizza",
+        component: PizzaComponent,
+        allow: ['authorized_user'],
+        unaccepted: '/signin',
     },
 ];
