@@ -1,6 +1,6 @@
 /**
  * Pizza Component
- * version 0.51
+ * version 0.6
  */
 import Component     from '../../component';
 import PizzaForm     from './pizza.form.component';
@@ -18,6 +18,7 @@ class Pizza extends Component {
             size: 60,
             ingredients: [],
             tags: [],
+            pizza_sheet: null,
             waiting: true,
         };
 
@@ -38,15 +39,18 @@ class Pizza extends Component {
     init() {
         let ingredients = [];
         let tags = [];
+        let pizza_sheet = null;
 
         Promise.all([
             STORE.ingredients(),
             STORE.tags(),
+            loadImage('pizza_sheet', 'https://pizza-tele.ga/static/images/pizza.png'),
         ]).then(data => {
-            // load ingredients and tags
+            // load ingredients, tags and image of pizza sheet
             if (data[0].error || data[1].error) ROUTER.navigateTo('/signin'); // 4** error Wrong authorization data
             ingredients = data[0].results;
             tags        = data[1].results;
+            pizza_sheet = data[2].image;
             return data;
         }).then(data => {
             // preload images of ingredients
@@ -57,7 +61,7 @@ class Pizza extends Component {
             // add images to ingredients ..
             images.forEach((image, i) => ingredients[i].image = image.image);
             // and updateState :)
-            this.updateState({ ingredients, tags, waiting: false });
+            this.updateState({ ingredients, tags, pizza_sheet, waiting: false });
         }).catch(error => {
             // errors
             console.log(error);
@@ -92,10 +96,10 @@ class Pizza extends Component {
     }
 
     render() {
-        const { size, ingredients, tags, waiting } = this.state;
+        const { size, ingredients, tags, pizza_sheet, waiting } = this.state;
         
         return [
-            this.pizzaPane.update({ ingredients }),
+            this.pizzaPane.update({ pizza_sheet, size, ingredients }),
             this.pizzaForm.update({ size, ingredients, tags, price: this.calculatePrice() }),
         ];
     }
