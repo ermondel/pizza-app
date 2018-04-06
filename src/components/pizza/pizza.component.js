@@ -1,12 +1,14 @@
 /**
  * Pizza Component
- * version 0.42
+ * version 0.51
  */
-import Component    from '../../component';
-import PizzaForm    from './pizza.form.component';
-import PizzaPane    from './pizza.pane.component';
-import PizzaWaiting from './pizza.waiting.component';
-import { STORE }    from '../../services/store.service';
+import Component     from '../../component';
+import PizzaForm     from './pizza.form.component';
+import PizzaPane     from './pizza.pane.component';
+import PizzaWaiting  from './pizza.waiting.component';
+import { STORE }     from '../../services/store.service';
+import { ROUTER }    from '../../services/router.service';
+import { loadImage } from '../../utils';
 
 class Pizza extends Component {
     constructor(props) {
@@ -34,19 +36,31 @@ class Pizza extends Component {
     }
 
     init() {
+        let ingredients = [];
+        let tags = [];
+
         Promise.all([
             STORE.ingredients(),
             STORE.tags(),
         ]).then(data => {
-            if (!data.error) {
-                const ingredients = data[0].results;
-                const tags = data[1].results;
-
-                this.updateState({ ingredients, tags, waiting: false });
-            } else {
-                ROUTER.navigateTo('/signin');
-            } 
+            // load ingredients and tags
+            if (data[0].error || data[1].error) ROUTER.navigateTo('/signin'); // 4** error Wrong authorization data
+            ingredients = data[0].results;
+            tags        = data[1].results;
+            return data;
+        }).then(data => {
+            // preload images of ingredients
+            const ingrs = data[0].results;
+            const loadImages = ingrs.map(ingredient => loadImage(ingredient.name, 'https://pizza-tele.ga/'+ingredient.image_url));
+            return Promise.all(loadImages);
+        }).then(images => {
+            // add images to ingredients ..
+            images.forEach((image, i) => ingredients[i].image = image.image);
+            // and updateState :)
+            this.updateState({ ingredients, tags, waiting: false });
         }).catch(error => {
+            // errors
+            console.log(error);
             ROUTER.navigateTo('/503');
         });
     }

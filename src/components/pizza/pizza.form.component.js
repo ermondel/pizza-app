@@ -1,6 +1,6 @@
 /**
  * Pizza Form Component
- * version 0.44
+ * version 0.45
  * props: 
  *  size, ingredients, tags, price,
  *  onChangeIngredient, onChangeTag, onChangeSize,
@@ -51,10 +51,7 @@ class PizzaForm extends Component {
         const ingredients_checkboxes = ingredients.map(ingr => `
             <label title="${ingr.description}">
                 <input type="checkbox" name="ingredient" value="${ingr.id}"${(ingr.checked ? 'checked="checked"' : '')}>
-                <span class="ingredient">
-                    <img src="https://pizza-tele.ga/${ingr.image_url}" alt="${ingr.description}">
-                    <span>${ingr.name}</span>
-                </span>
+                <span class="ingredient"><img src="${ingr.image.src}" alt="${ingr.description}"><span>${ingr.name}</span></span>
             </label>`).join('');
 
         const tags_checkboxes = tags.map(tag => `

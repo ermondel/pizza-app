@@ -4,7 +4,7 @@
  */
 class StoreService {
     constructor() {
-        // qwe
+        // 
     }
 
     get token() {
