@@ -1,6 +1,6 @@
 /**
  * Pizza Form Component
- * version 0.45
+ * version 0.46
  * props: 
  *  size, ingredients, tags, price,
  *  onChangeIngredient, onChangeTag, onChangeSize,
@@ -26,23 +26,13 @@ class PizzaForm extends Component {
     handlerChange(e) {
         if (e.target.type === 'checkbox') 
 		{
-			if (e.target.name === 'ingredient') this.props.onChangeIngredient(this.checkedById(this.props.ingredients, e.target));
-            if (e.target.name === 'tag') this.props.onChangeTag(this.checkedById(this.props.tags, e.target));
+			if (e.target.name === 'ingredient') this.props.onChangeIngredient(e.target.value, e.target.checked);
+            if (e.target.name === 'tag') this.props.onChangeTag(e.target.value, e.target.checked);
         }
         if (e.target.type === 'radio')
         {
             if (e.target.name === 'size') this.props.onChangeSize(e.target.value);
         }
-    }
-
-    checkedById(fields, input) {
-        for (let field of fields) {
-            if (field.id == input.value) { 
-                field.checked = input.checked;
-                break;
-            }
-        }
-        return fields;
     }
 
     render() {

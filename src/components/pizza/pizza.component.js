@@ -1,6 +1,6 @@
 /**
  * Pizza Component
- * version 0.6
+ * version 0.7
  */
 import Component     from '../../component';
 import PizzaForm     from './pizza.form.component';
@@ -69,16 +69,25 @@ class Pizza extends Component {
         });
     }
 
-    onChangeIngredient(ingredients) {
-        this.updateState({ ingredients });
+    onChangeIngredient(id, checked) {
+        const { ingredients } = this.state;
+        this.updateState({ ingredients: this.checkedById(ingredients, id, checked) });
     }
 
-    onChangeTag(tags) {
-        this.updateState({ tags });
+    onChangeTag(id, checked) {
+        const { tags } = this.state;
+        this.updateState({ tags: this.checkedById(tags, id, checked) });
     }
 
     onChangeSize(size) {
         this.updateState({ size });
+    }
+
+    checkedById(fields, id, checked) {
+        for (let field of fields) {
+            if (field.id == id) { field.checked = checked; break; }
+        }
+        return fields;
     }
 
     calculatePrice() {

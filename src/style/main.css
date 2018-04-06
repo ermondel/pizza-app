@@ -1,6 +1,6 @@
 /**
  * Main
- * version 1.44
+ * version 1.46
  */
 html { background-color: #455A64; }
 body { font-family: Arial, sans-serif; font-size: 14px; color: black; background-color: white; }
@@ -182,7 +182,7 @@ cursor: pointer; float: left; border-radius: 3px; -moz-border-radius: 3px; -webk
 #create #ingredient-box .ingredient img,
 #create #ingredient-box .ingredient span { vertical-align: middle; }
 #create #ingredient-box .ingredient img { margin-right: 5px; }
-#create #ingredient-box .ingredient:hover { background-color: #89C040; color: white; }
+#create #ingredient-box .ingredient:hover { background-color: #ae4424; color: white; }
 #create #ingredient-box input[type=checkbox]:checked + span { background-color: #89C040; color: white; }
 /* tag-box */
 #create #tag-box { margin-bottom: 30px; width: 100%; overflow: hidden; }
@@ -191,7 +191,7 @@ cursor: pointer; float: left; border-radius: 3px; -moz-border-radius: 3px; -webk
 background-color: #efefef; cursor: pointer; float: left; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 #create #tag-box .tag span { vertical-align: middle; }
 #create #tag-box .tag span::before { content: "#"; margin-right: 5px; }
-#create #tag-box .tag:hover { background-color: #89C040; color: white; }
+#create #tag-box .tag:hover { background-color: #ae4424; color: white; }
 #create #tag-box input[type=checkbox]:checked + span { background-color: #89C040; color: white; }
 /* price-box */
 #create #price-box { font-size: 1.2em; }
