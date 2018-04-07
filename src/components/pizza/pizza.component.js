@@ -1,14 +1,14 @@
 /**
  * Pizza Component
- * version 0.7
+ * version 0.74
  */
-import Component     from '../../component';
-import PizzaForm     from './pizza.form.component';
-import PizzaPane     from './pizza.pane.component';
-import PizzaWaiting  from './pizza.waiting.component';
-import { STORE }     from '../../services/store.service';
-import { ROUTER }    from '../../services/router.service';
-import { loadImage } from '../../utils';
+import Component      from '../../component';
+import PizzaForm      from './pizza.form.component';
+import PizzaPane      from './pizza.pane.component';
+import { STORE }      from '../../services/store.service';
+import { ROUTER }     from '../../services/router.service';
+import { loadImage }  from '../../utils';
+import { waitingbar } from '../../utils';
 
 class Pizza extends Component {
     constructor(props) {
@@ -33,7 +33,6 @@ class Pizza extends Component {
             onChangeSize: this.onChangeSize.bind(this),
         });
         this.pizzaPane = new PizzaPane();
-        this.pizzaWaiting = new PizzaWaiting();
     }
 
     init() {
@@ -107,10 +106,10 @@ class Pizza extends Component {
     render() {
         const { size, ingredients, tags, pizza_sheet, waiting } = this.state;
         
-        return [
+        return !waiting ? [
             this.pizzaPane.update({ pizza_sheet, size, ingredients }),
             this.pizzaForm.update({ size, ingredients, tags, price: this.calculatePrice() }),
-        ];
+        ] : waitingbar;
     }
 }
 

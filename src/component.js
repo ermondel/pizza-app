@@ -1,6 +1,6 @@
 /**
  * Component
- * version 1.9
+ * version 2.0
  */
 class Component {
 	constructor(props) {
@@ -24,6 +24,7 @@ class Component {
 		const html = this.render();
 
 		this.container.innerHTML = '';
+		if (this.inner) this.inner.innerHTML = '';
 
 		let box = this.inner || this.container;
 

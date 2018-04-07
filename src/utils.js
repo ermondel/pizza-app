@@ -1,3 +1,6 @@
+import img_waiting from './style/img/waiting.gif';
+export const waitingbar = `<div id="waiting"><img src="${img_waiting}" alt="waiting"></div>`;
+
 /**
  * Load image by path
  * return promise
