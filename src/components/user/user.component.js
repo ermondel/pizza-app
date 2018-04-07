@@ -1,11 +1,11 @@
 /**
  * User Component
- * version 0.82
+ * version 0.9
  */
-import Component   from '../../component';
-import { AUTH }    from '../../services/auth.service';
-import { ROUTER }  from '../../services/router.service';
-import img_waiting from '../../style/img/waiting.gif';
+import Component      from '../../component';
+import { AUTH }       from '../../services/auth.service';
+import { ROUTER }     from '../../services/router.service';
+import { waitingbar } from '../../utils';
 
 class User extends Component {
     constructor(props) {
@@ -35,10 +35,7 @@ class User extends Component {
     render() {
         const { data, waiting } = this.state;
 
-        if (waiting) return `
-		<div id="waiting">
-			<img src="${img_waiting}" alt="waiting">
-        </div>`;
+        if (waiting) return waitingbar;
 
         const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
         let ca = new Date(data.created_at);

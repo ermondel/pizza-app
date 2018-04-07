@@ -1,11 +1,12 @@
 /**
  * Signin Component
- * version 0.8
+ * version 0.9
  */
-import Component  from '../../component';
-import SigninForm from './signin.form.component';
-import { AUTH }   from '../../services/auth.service';
-import { ROUTER } from '../../services/router.service';
+import Component      from '../../component';
+import SigninForm     from './signin.form.component';
+import { AUTH }       from '../../services/auth.service';
+import { ROUTER }     from '../../services/router.service';
+import { waitingbar } from '../../utils';
 
 class Signin extends Component {
 	constructor(props) {
@@ -41,7 +42,7 @@ class Signin extends Component {
 	render() {
 		const { errors, waiting } = this.state;
 
-		return this.signinForm.update({ errors, waiting });
+		return !waiting ? this.signinForm.update({ errors }) : waitingbar;
 	}
 }
 

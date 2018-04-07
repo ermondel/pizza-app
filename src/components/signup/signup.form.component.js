@@ -1,16 +1,14 @@
 /**
  * Signup Form
- * version 0.8
+ * version 0.9
  * props
  *	errors
  *	stores
- *	waiting
  *	onSubmitForm
  */
 import Component            from '../../component';
 import { validateElements } from '../../utils';
 import { signupFormRules }  from './signup.form.rules';
-import img_waiting          from '../../style/img/waiting.gif';
 
 class SignupForm extends Component {
 	constructor(props) {
@@ -60,11 +58,6 @@ class SignupForm extends Component {
 	}
 
 	render() {
-		if (this.props.waiting) return `
-		<div id="waiting">
-			<img src="${img_waiting}" alt="waiting">
-		</div>`;
-
 		const { store_id, store_password, username, password, password_repeat, email } = this.state.elements;
 		let { stores } = this.props;
 		let { errors } = this.state;

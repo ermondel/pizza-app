@@ -1,11 +1,12 @@
 /**
  * Signup Component
- * version 0.8
+ * version 0.9
  */
-import Component  from '../../component';
-import SignupForm from './signup.form.component';
-import { AUTH }   from '../../services/auth.service';
-import { ROUTER } from '../../services/router.service';
+import Component      from '../../component';
+import SignupForm     from './signup.form.component';
+import { AUTH }       from '../../services/auth.service';
+import { ROUTER }     from '../../services/router.service';
+import { waitingbar } from '../../utils';
 
 class Signup extends Component {
 	constructor(props) {
@@ -54,7 +55,7 @@ class Signup extends Component {
 	render() {
 		const { errors, stores, waiting } = this.state;
 
-		return this.signupForm.update({ errors, stores, waiting });
+		return !waiting ? this.signupForm.update({ errors, stores }) : waitingbar;
 	}
 }
 

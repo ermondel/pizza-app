@@ -1,15 +1,13 @@
 /**
  * Signin Form
- * version 0.8
+ * version 0.9
  * props
  *	errors
- *	waiting
  *	onSubmitForm
  */
 import Component            from '../../component';
 import { validateElements } from '../../utils';
 import { signinFormRules }  from './signin.form.rules';
-import img_waiting          from '../../style/img/waiting.gif';
 
 class SigninForm extends Component {
 	constructor(props) {
@@ -49,11 +47,6 @@ class SigninForm extends Component {
 	}
 
 	render() {
-		if (this.props.waiting) return `
-		<div id="waiting">
-			<img src="${img_waiting}" alt="waiting">
-		</div>`;
-
 		const { username, password } = this.state.elements;
 		let { errors } = this.state;
 
