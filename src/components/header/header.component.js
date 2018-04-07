@@ -1,6 +1,6 @@
 /**
  * Header Component
- * version 0.8
+ * version 0.9
  * props
  *  userAuth
  *  path
@@ -44,7 +44,7 @@ class Header extends Component {
         return `
         <div id="header-inner">
             <div id="logo-wrap"><a href="#/" tabindex="0" aria-label="home"><img src="${HeaderImg['logo.png']}" alt="Pizza App Logo"></a></div>
-            <div id="dial-wrap"><span id="dial">00:00:00</span></div>
+            <div id="dial-wrap"><span id="dial">${(clock('dial', true))}</span></div>
             <div id="nav-wrap">${navigate}</div>
         </div>`;
     }

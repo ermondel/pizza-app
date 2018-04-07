@@ -1,3 +1,6 @@
+/**
+ * Waiting bar
+ */
 import img_waiting from './style/img/waiting.gif';
 export const waitingbar = `<div id="waiting"><img src="${img_waiting}" alt="waiting"></div>`;
 
@@ -17,22 +20,28 @@ export const loadImage = (name, path) => {
 /**
  * Clock XX:XX:XX
  */
-export const clock = (id) => {
+export const clock = (id, init) => {
 	const dial = document.getElementById(id);
-	if (dial) {
-		const current_time = new Date();
 
-		let hours   = current_time.getHours();
-		let minutes = current_time.getMinutes();
-		let seconds = current_time.getSeconds();
+	const current_time = new Date();
 
-		hours   = hours   < 10 ? '0'+hours   : hours;
-		minutes = minutes < 10 ? '0'+minutes : minutes;
-		seconds = seconds < 10 ? '0'+seconds : seconds;
+	let hours   = current_time.getHours();
+	let minutes = current_time.getMinutes();
+	let seconds = current_time.getSeconds();
 
-		dial.innerHTML = `<span>${hours}:${minutes}:${seconds}</span>`;
+	hours   = hours   < 10 ? '0'+hours   : hours;
+	minutes = minutes < 10 ? '0'+minutes : minutes;
+	seconds = seconds < 10 ? '0'+seconds : seconds;
+
+	const content = `<span>${hours}:${minutes}:${seconds}</span>`;
+
+	if (init) {
+		setTimeout(clock, 1000, id, false);
+		return content;
+	} else {
+		dial.innerHTML = content;
+		setTimeout(clock, 1000, id, false);
 	}
-	setTimeout(clock, 1000, id);
 };
 
 /**
