@@ -5,6 +5,24 @@ import img_waiting from './style/img/waiting.gif';
 export const waitingbar = `<div id="waiting"><img src="${img_waiting}" alt="waiting"></div>`;
 
 /**
+ * Get random image position in circle
+ */
+export const randomImgPosInCircle = (D, width, height, offset = 0) => {
+	const R = Math.round((D - offset) / 2);                          // circle radius
+	let x = Math.floor(Math.random() * (R + 1));                     // get random on X axis
+	let y = Math.floor(Math.sqrt(Math.pow(R, 2) - Math.pow(x, 2)));  // limit on Y axis by Pythagorean theorem
+	y = Math.floor(Math.random() * y);                               // get random on Y axis
+	switch (Math.floor(Math.random() * 4) + 1) {                     // random quadrant
+		case 4: x = x; y = -y; break;
+		case 3: x = -x; y = -y; break;
+		case 2: x = -x; y = y; break;
+	}
+	x = (x + Math.round(D / 2)) - Math.round(width / 2);             // image center alignment on X axis
+	y = (y + Math.round(D / 2)) - Math.round(height / 2);            // image center alignment on Y axis
+	return { x , y };
+};
+
+/**
  * Load image by path
  * return promise
  */
