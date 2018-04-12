@@ -1,13 +1,13 @@
 /**
  * Pizza Pane Component
- * version 0.62
+ * version 0.66
  * props
  *  ingredients
  *  pizza_sheet
  *  size
  */
 import Component from '../../component';
-import { randomImgPosInCircle } from '../../utils';
+import { TRIG }  from '../../services/trig.service';
 
 class PizzaPane extends Component {
     constructor(props) {
@@ -23,27 +23,19 @@ class PizzaPane extends Component {
     }
 
     render() {
-        const { pizza_sheet, size, ingredients } = this.props;
-
-        const sheetW = 200 + Number(size) * 2;
-        const sheetH = 200 + Number(size) * 2;
-        const sheetX = Math.round(this.canvas.width * 0.5 - sheetW * 0.5);
-        const sheetY = Math.round(this.canvas.height * 0.5 - sheetH * 0.5);
+        let { pizza_sheet, size, ingredients } = this.props;
 
         if (pizza_sheet) {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.ctx.drawImage(pizza_sheet, sheetX, sheetY, sheetW, sheetH);
+            const sheetW = 200 + Number(size) * 2;
+            const sheetH = 200 + Number(size) * 2;
+            const border = 66 + Number(size) * 0.4;
+            
+            ingredients = ingredients.filter(ingredient => ingredient.checked);
 
-            for (let ingredient of ingredients) 
-            {
-                if (ingredient.checked) 
-                {
-                    const iconW = ingredient.image.width;
-                    const iconH = ingredient.image.height;
-                    const coord = randomImgPosInCircle(sheetW, iconW, iconH, 90);
-                    this.ctx.drawImage(ingredient.image, coord.x, coord.y, iconW, iconH);
-                }
-            }
+            TRIG.init(this.ctx);
+            TRIG.roundImageDrawOnCircle(pizza_sheet, sheetW, sheetH);
+            TRIG.imagesStackFill(ingredients);
+            TRIG.imagesStackDrawRandomOnCircle(sheetW, border);
         }
 
         return this.canvas;
