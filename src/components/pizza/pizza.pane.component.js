@@ -1,6 +1,6 @@
 /**
  * Pizza Pane Component
- * version 0.66
+ * version 0.71
  * props
  *  ingredients
  *  pizza_sheet
@@ -33,9 +33,11 @@ class PizzaPane extends Component {
             ingredients = ingredients.filter(ingredient => ingredient.checked);
 
             TRIG.init(this.ctx);
-            TRIG.roundImageDrawOnCircle(pizza_sheet, sheetW, sheetH);
-            TRIG.imagesStackFill(ingredients);
-            TRIG.imagesStackDrawRandomOnCircle(sheetW, border);
+            TRIG.drawRoundSheet(pizza_sheet, sheetW, sheetH);
+            TRIG.imagesStackFill(ingredients, 24);
+            TRIG.circlesInCircle(6, 226);
+            TRIG.circlesInCircle(5, 150);
+            TRIG.circlesInCircle(2, 74);
         }
 
         return this.canvas;
