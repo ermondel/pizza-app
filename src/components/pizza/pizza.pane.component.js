@@ -26,8 +26,6 @@ class PizzaPane extends Component {
         const pizza = pizzaPaneRules.find(pizza => Number(size) === pizza.size);
 
         if (pizza_sheet && pizza) {
-            ingredients = ingredients.filter(ingredient => ingredient.checked);
-
             TRIG.init(this.ctx);
             TRIG.drawRoundSheet(pizza_sheet, pizza.diameter, pizza.diameter);
 

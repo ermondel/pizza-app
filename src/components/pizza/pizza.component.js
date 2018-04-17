@@ -1,6 +1,6 @@
 /**
  * Pizza Component
- * version 0.74
+ * version 0.741
  */
 import Component      from '../../component';
 import PizzaForm      from './pizza.form.component';
@@ -106,8 +106,10 @@ class Pizza extends Component {
     render() {
         const { size, ingredients, tags, pizza_sheet, waiting } = this.state;
         
+        const ingredientsChecked = ingredients.filter(ingredient => ingredient.checked);
+        
         return !waiting ? [
-            this.pizzaPane.update({ pizza_sheet, size, ingredients }),
+            this.pizzaPane.update({ pizza_sheet, size, ingredients: ingredientsChecked }),
             this.pizzaForm.update({ size, ingredients, tags, price: this.calculatePrice() }),
         ] : waitingbar;
     }
