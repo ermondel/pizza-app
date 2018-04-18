@@ -1,6 +1,6 @@
 /**
  * Pizza Component
- * version 0.741
+ * version 0.744
  */
 import Component      from '../../component';
 import PizzaForm      from './pizza.form.component';
@@ -31,8 +31,18 @@ class Pizza extends Component {
             onChangeIngredient: this.onChangeIngredient.bind(this),
             onChangeTag: this.onChangeTag.bind(this),
             onChangeSize: this.onChangeSize.bind(this),
+            onSubmit: this.onSubmit.bind(this),
         });
-        this.pizzaPane = new PizzaPane();
+
+        this.canvas = document.createElement('canvas');
+        this.canvas.width  = 320;
+        this.canvas.height = 320;
+        this.ctx = this.canvas.getContext('2d');
+
+        this.pizzaPane = new PizzaPane({
+            canvas: this.canvas,
+            ctx: this.ctx,
+        });
     }
 
     init() {
@@ -80,6 +90,10 @@ class Pizza extends Component {
 
     onChangeSize(size) {
         this.updateState({ size });
+    }
+
+    onSubmit() {
+        this.canvas.toBlob(data => console.log(data));
     }
 
     checkedById(fields, id, checked) {

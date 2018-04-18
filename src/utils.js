@@ -12,6 +12,7 @@ export const loadImage = (name, path) => {
 	return new Promise((resolve, reject) => {
 		const image = new Image();
 		image.src = path;
+		image.crossOrigin = 'anonymous';
 		image.onload = () => resolve({name, image});
 		image.onerror = (e) => reject(e);
 	});

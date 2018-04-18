@@ -1,7 +1,7 @@
 /**
  * Pizza Pane Component
- * version 0.74
- * props: ingredients, pizza_sheet, size
+ * version 0.75
+ * props: ingredients, pizza_sheet, size, canvas, ctx
  */
 import Component from '../../component';
 import { TRIG }  from '../../services/trig.service';
@@ -13,20 +13,15 @@ class PizzaPane extends Component {
 
         this.container = document.createElement('div');
         this.container.id = 'pane';
-
-        this.canvas = document.createElement('canvas');
-        this.canvas.width  = 320;
-        this.canvas.height = 320;
-        this.ctx = this.canvas.getContext('2d');
     }
 
     render() {
-        let { pizza_sheet, size, ingredients } = this.props;
+        let { pizza_sheet, size, ingredients, canvas, ctx } = this.props;
 
         const pizza = pizzaPaneRules.find(pizza => Number(size) === pizza.size);
 
         if (pizza_sheet && pizza) {
-            TRIG.init(this.ctx);
+            TRIG.init(ctx);
             TRIG.drawRoundSheet(pizza_sheet, pizza.diameter, pizza.diameter);
 
             for (let circle of pizza.circles) {
@@ -35,7 +30,7 @@ class PizzaPane extends Component {
             }
         }
 
-        return this.canvas;
+        return canvas;
     }
 }
 

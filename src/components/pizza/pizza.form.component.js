@@ -1,11 +1,10 @@
 /**
  * Pizza Form Component
- * version 0.46
- * props: 
- *  size, ingredients, tags, price,
- *  onChangeIngredient, onChangeTag, onChangeSize,
+ * version 0.47
+ * props: size, ingredients, tags, price,
+ * onChangeIngredient, onChangeTag, onChangeSize, onSubmit,
  */
-import Component   from '../../component';
+import Component from '../../component';
 
 class PizzaForm extends Component {
     constructor(props) {
@@ -21,6 +20,7 @@ class PizzaForm extends Component {
         this.container = document.createElement('form');
         this.container.id = 'create';
         this.container.addEventListener('change', this.handlerChange.bind(this));
+        this.container.addEventListener('submit', this.handlerSubmit.bind(this));
     }
 
     handlerChange(e) {
@@ -33,6 +33,11 @@ class PizzaForm extends Component {
         {
             if (e.target.name === 'size') this.props.onChangeSize(e.target.value);
         }
+    }
+
+    handlerSubmit(e) {
+        e.preventDefault();
+        this.props.onSubmit();
     }
 
     render() {
@@ -76,7 +81,9 @@ class PizzaForm extends Component {
         <div id="price-box">
             Total price: <strong>$ ${price}</strong>
         </div>
-        `;
+        <div id="submit-box">
+            <button class="box-radius-5 box-shadow-2">Submit</button>
+        </div>`;
     }
 }
 
