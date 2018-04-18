@@ -1,14 +1,13 @@
 /**
  * Pizza Component
- * version 0.744
+ * version 0.75
  */
-import Component      from '../../component';
-import PizzaForm      from './pizza.form.component';
-import PizzaPane      from './pizza.pane.component';
-import { STORE }      from '../../services/store.service';
-import { ROUTER }     from '../../services/router.service';
-import { loadImage }  from '../../utils';
-import { waitingbar } from '../../utils';
+import Component  from '../../component';
+import PizzaForm  from './pizza.form.component';
+import PizzaPane  from './pizza.pane.component';
+import { STORE }  from '../../services/store.service';
+import { ROUTER } from '../../services/router.service';
+import { waitingbar, loadImage, canvasToFile } from '../../utils';
 
 class Pizza extends Component {
     constructor(props) {
@@ -93,7 +92,27 @@ class Pizza extends Component {
     }
 
     onSubmit() {
-        this.canvas.toBlob(data => console.log(data));
+        canvasToFile(this.canvas).then(image => {
+            let formData = new FormData();
+            formData.append('name', 'this is test pizza');
+            formData.append('description', 'this is description');
+            formData.append('size', 60);
+            formData.append('ingredients', '[1,5,3,12]');
+            formData.append('tags', '[]');
+            formData.append("image", image, "my_canvas.png");
+            return formData;
+        }).then(formData => {
+            return STORE.create(formData);
+        }).then(response => {
+            if (response.success) {
+                ROUTER.navigateTo('/pizza/successful');
+            } else {
+                console.log(response.error);
+            }
+        }).catch(error => {
+            console.log(error.name + ': ' + error.message);
+            ROUTER.navigateTo('/503');
+        });
     }
 
     checkedById(fields, id, checked) {

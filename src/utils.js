@@ -5,6 +5,16 @@ import img_waiting from './style/img/waiting.gif';
 export const waitingbar = `<div id="waiting"><img src="${img_waiting}" alt="waiting"></div>`;
 
 /**
+ * Create file from canvas
+ * return promise
+ */
+export const canvasToFile = (canvas, mimeType = 'image/png') => {
+	return new Promise((resolve, reject) => {
+		canvas.toBlob(data => resolve(data), mimeType);
+	});
+};
+
+/**
  * Load image by path
  * return promise
  */

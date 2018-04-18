@@ -1,6 +1,6 @@
 /**
  * Store Service
- * version 0.14
+ * version 0.15
  */
 class StoreService {
     constructor() {
@@ -11,19 +11,15 @@ class StoreService {
 		return localStorage.getItem('token');
 	}
 
-    initget() {
-		const init  = {};
-		init.method = 'GET';
-		
-		init.headers = new Headers();
-		init.headers.append('content-type', 'application/json');
-		init.headers.append('Authorization', `Bearer ${this.token}`);
-
-		return init;
-	}
-
     ingredients() {
-        return fetch('https://pizza-tele.ga/api/v1/ingredient/list', this.initget()).then(response => {
+		const headers = new Headers();
+		headers.append('content-type', 'application/json');
+		headers.append('Authorization', `Bearer ${this.token}`);
+
+        return fetch('https://pizza-tele.ga/api/v1/ingredient/list', {
+			method: 'GET',
+			headers,
+		}).then(response => {
             // success response status 200 ok  OR  4** client error
 			const status_code = String(response.status).charAt(0);
 			if (response.status == 200 || status_code == 4) return response.json();
@@ -32,11 +28,34 @@ class StoreService {
 	}
 	
 	tags() {
-		return fetch('https://pizza-tele.ga/api/v1/tag/list', this.initget()).then(response => {
+		const headers = new Headers();
+		headers.append('content-type', 'application/json');
+		headers.append('Authorization', `Bearer ${this.token}`);
+
+		return fetch('https://pizza-tele.ga/api/v1/tag/list', {
+			method: 'GET',
+			headers,
+		}).then(response => {
 			// success response status 200 ok  OR  4** client error
 			const status_code = String(response.status).charAt(0);
 			if (response.status == 200 || status_code == 4) return response.json();
 			throw new Error(); 
+		});
+	}
+
+	create(formData) {
+		const headers = new Headers();
+		headers.append('Authorization', `Bearer ${this.token}`);
+
+		return fetch('https://pizza-tele.ga/api/v1/pizza/create', {
+			method: 'POST',
+			headers,
+			body: formData,
+		}).then(response => {
+			if (response.status == 201 || String(response.status).charAt(0) == 4) return response.json();
+			throw new Error('unknown');
+		}, reject => {
+			throw new Error('system');
 		});
 	}
 }
