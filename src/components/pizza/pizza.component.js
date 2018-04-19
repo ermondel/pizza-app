@@ -1,6 +1,6 @@
 /**
  * Pizza Component
- * version 0.75
+ * version 0.77
  */
 import Component  from '../../component';
 import PizzaForm  from './pizza.form.component';
@@ -91,14 +91,26 @@ class Pizza extends Component {
         this.updateState({ size });
     }
 
-    onSubmit() {
+    onSubmit(name, description) {
+        const { size, ingredients, tags } = this.state;
+
+        // ingredients IDs
+        const ingredientsChecked = ingredients.filter(ingredient => ingredient.checked);
+        let ingredientsIDs = ingredientsChecked.map(ingredient => ingredient.id);
+        ingredientsIDs = JSON.stringify(ingredientsIDs);
+
+        // tags IDs
+        const tagsChecked = tags.filter(tag => tag.checked);
+        let tagsIDs = tagsChecked.map(tag => tag.id);
+        tagsIDs = JSON.stringify(tagsIDs);
+
         canvasToFile(this.canvas).then(image => {
             let formData = new FormData();
-            formData.append('name', 'this is test pizza');
-            formData.append('description', 'this is description');
-            formData.append('size', 60);
-            formData.append('ingredients', '[1,5,3,12]');
-            formData.append('tags', '[]');
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('size', Number(size));
+            formData.append('ingredients', ingredientsIDs);
+            formData.append('tags', tagsIDs);
             formData.append("image", image, "my_canvas.png");
             return formData;
         }).then(formData => {

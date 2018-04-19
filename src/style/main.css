@@ -1,6 +1,6 @@
 /**
  * Main
- * version 1.46
+ * version 1.5
  */
 html { background-color: #455A64; }
 body { font-family: Arial, sans-serif; font-size: 14px; color: black; background-color: white; }
@@ -196,11 +196,16 @@ background-color: #efefef; cursor: pointer; float: left; border-radius: 3px; -mo
 /* price-box */
 #create #price-box { font-size: 1.2em; }
 #create #price-box strong { color: #FF6600; font-size: 2em; margin-left: 25px; }
+/* button */
+#create button { border: none; cursor: pointer; display: block; font-size: 1em; padding: 18px 24px; color: white;
+background-color: #89C040; margin-top: 45px; }
+#create button:hover { background-color: #FF6600; }
+#create button:focus { outline: none; background-color: #FF6600; }
 
 /* .. in process ...
 ========================================================================== */
-#pane-form { width: 850px; margin: 0px auto; overflow: hidden; }
-#pane-form #pane { width: 400px; float: left; margin-right: 50px; position: relative; }
+#pane-form { width: 770px; margin: 0px auto; overflow: hidden; }
+#pane-form #pane { width: 320px; float: left; margin-right: 50px; position: relative; }
 #pane-form #create { width: 400px; float: left; }
 #temp-exp-box-for-im { position: absolute; top: 100px; left: 100px; z-index: 1; width: 200px; height: 200px; }
 

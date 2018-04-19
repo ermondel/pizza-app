@@ -1,8 +1,8 @@
 /**
  * Pizza Form Component
- * version 0.47
+ * version 0.49
  * props: size, ingredients, tags, price,
- * onChangeIngredient, onChangeTag, onChangeSize, onSubmit,
+ * onChangeIngredient, onChangeTag, onChangeSize, onSubmit
  */
 import Component from '../../component';
 
@@ -37,11 +37,20 @@ class PizzaForm extends Component {
 
     handlerSubmit(e) {
         e.preventDefault();
-        this.props.onSubmit();
+
+        const name = e.target.elements.name.value.trim();
+        const description = e.target.elements.description.value.trim();
+
+        this.updateState({ 
+			elements: { name, description }
+		});
+
+        this.props.onSubmit(name, description);
     }
 
     render() {
         const { size, ingredients, tags, price } = this.props;
+        const { name, description } = this.state.elements;
 
         const ingredients_checkboxes = ingredients.map(ingr => `
             <label title="${ingr.description}">
@@ -56,16 +65,6 @@ class PizzaForm extends Component {
             </label>`).join('');
 
         return `
-        <div id="text-box">
-            <label>
-                <span>Pizza and order name *</span>
-                <input type="text" id="name" name="name">
-            </label>
-            <label>
-                <span>Description</span>
-                <input type="text" id="description" name="description">
-            </label>
-        </div>
         <div id="size-box">
             <span class="legend">Pizza size</span> 
             <label><input type="radio" name="size" value="30"${(size == 30 ? 'checked="checked"' : '')}> <span>30°</span></label>
@@ -77,6 +76,16 @@ class PizzaForm extends Component {
         </div>
         <div id="tag-box">
             ${tags_checkboxes}
+        </div>
+        <div id="text-box">
+            <label>
+                <span>Pizza name *</span>
+                <input type="text" id="name" name="name" value="${name}">
+            </label>
+            <label>
+                <span>Description</span>
+                <input type="text" id="description" name="description" value="${description}">
+            </label>
         </div>
         <div id="price-box">
             Total price: <strong>$ ${price}</strong>
