@@ -58,6 +58,22 @@ class StoreService {
 			throw new Error('system');
 		});
 	}
+
+	ticket() {
+		const headers = new Headers();
+		headers.append('content-type', 'application/json');
+		headers.append('Authorization', `Bearer ${this.token}`);
+
+		return fetch('https://pizza-tele.ga/api/v1/ws/ticket', {
+			method: 'GET',
+			headers,
+		}).then(response => {
+			if (response.status == 200 || String(response.status).charAt(0) == 4) return response.json();
+			throw new Error('unknown');
+		}, reject => {
+			throw new Error('system');
+		});
+	}
 }
 
 export const STORE = new StoreService();

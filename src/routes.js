@@ -8,6 +8,7 @@ import LogoutComponent    from './components/logout/logout.component';
 import UserComponent      from './components/user/user.component';
 import PizzaComponent     from './components/pizza/pizza.component';
 import PizzaSuccessful    from './components/pizza/pizza.successful.component';
+import PolygonComponent   from './components/polygon/polygon.component';
 
 export const routes = [
     {
@@ -75,6 +76,13 @@ export const routes = [
         id: "Pizza successfully created",
         path: "/pizza/successful",
         component: PizzaSuccessful,
+        allow: ['authorized_user'],
+        unaccepted: '/signin',
+    },
+    {
+        id: "Polygon",
+        path: "/polygon",
+        component: PolygonComponent,
         allow: ['authorized_user'],
         unaccepted: '/signin',
     },
