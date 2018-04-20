@@ -1,80 +1,104 @@
 /**
  * List Component
- * version 0.2
+ * version 0.41
  */
-import Component      from '../../component';
-import pizzasPictures from './pizzas-pictures/*';
+import Component  from '../../component';
+import { STORE }  from '../../services/store.service';
+import { ROUTER } from '../../services/router.service';
+import { waitingbar } from '../../utils';
 
 class List extends Component {
     constructor(props) {
-        super(props);
+		super(props);
+		
+		this.state = {
+			pizzas: [],
+			waiting: true,
+		};
 
         this.container = document.createElement('main');
 		this.container.id = 'main';
+
+		this.socket = null;
+        this.socketCallbacks = {
+            onopen: this.onOpenSocket.bind(this),
+            onclose: this.onCloseSocket.bind(this),
+            onmessage: this.onMessageSocket.bind(this),
+            onerror: this.onErrorSocket.bind(this),
+        };
+        window.addEventListener('unload', this.onWindowUnload.bind(this));
+	}
+	
+	init() {
+		STORE.ticket().then(response => {
+			if (response.success) return new WebSocket(STORE.websocketURL + '?key=' + response.token);
+			throw new Error('auth_required');
+		}).then(socket => {
+			this.socket = socket;
+			Object.assign(this.socket, this.socketCallbacks);
+			return STORE.list();
+		}).then(response => {
+			if (!response.error) return response.results;
+			throw new Error('auth_required');
+		}).then(pizzas => {
+			this.updateState({ pizzas, waiting: false });
+		}).catch(error => {
+			console.log(error);
+		});
+	}
+
+	onOpenSocket() {
+        console.log('websocket', 'connection open successful');
+    }
+
+    onCloseSocket(event) {
+        if (event.wasClean) { console.log('websocket', 'connection close successful -');
+        } else { console.log('websocket', 'disconnect'); }
+        console.log('websocket', 'Code: ', event.code, 'reason: ', event.reason);
+	}
+	
+	onErrorSocket(error) {
+        console.log('websocket', 'error: ', error.message);
+    }
+
+    onMessageSocket(event) {
+		const data = JSON.parse(event.data);
+		let { pizzas } = this.state;
+
+		if (data.event_name == 'CREATE_PIZZA') pizzas.unshift(data.data);
+		if (data.event_name == 'ACCEPT_PIZZA') pizzas = pizzas.filter(pizza => !(data.data.indexOf(pizza.uuid)+1));
+		
+		this.updateState({ pizzas });
+    }
+    
+    onWindowUnload(e) {
+        this.socket.close();
     }
 
     render() {
-        return `
-        <div id="wrapper-pizza-add"><button class="pizza-add box-radius-5 box-shadow-2 tabindex="0">+ <span>Add pizza</span></button></div>
-	    <div class="pizzas">
-	        <div class="pizza">
-		        <div class="pizza-img"><a href="#" tabindex="0"><img src="${pizzasPictures['pizza1.jpg']}" alt="Neapolitan Pizza"></a></div>
-		        <time class="pizza-time">10:48:01</time>
-		        <div class="pizza-queue" >#1</div>
-		        <div class="pizza-eta" >ETA: 1 min</div>
-		        <div class="pizza-price" >$9.99</div>
-	        </div>
-	        <div class="pizza">
-		        <div class="pizza-img"><a href="#" tabindex="0"><img src="${pizzasPictures['pizza2.jpg']}" alt="Chicago Pizza"></a></div>
-		        <time class="pizza-time">10:55:21</time>
-		        <div class="pizza-queue" >#2</div>
-		        <div class="pizza-eta" >ETA: 7 min</div>
-		        <div class="pizza-price" >$12.12</div>
-	        </div>
-	        <div class="pizza">
-		        <div class="pizza-img"><a href="#" tabindex="0"><img src="${pizzasPictures['pizza3.jpg']}" alt="New York Style Pizza"></a></div>
-		        <time class="pizza-time">10:59:30</time>
-		        <div class="pizza-queue" >#3</div>
-		        <div class="pizza-eta" >ETA: 3 min</div>
-		        <div class="pizza-price" >$14.69</div>
-	        </div>
-	        <div class="pizza">
-		        <div class="pizza-img"><a href="#" tabindex="0"><img src="${pizzasPictures['pizza4.jpg']}" alt="Sicilian Pizza"></a></div>
-		        <time class="pizza-time">11:11:07</time>
-		        <div class="pizza-queue" >#4</div>
-		        <div class="pizza-eta" >ETA: 10 min</div>
-		        <div class="pizza-price" >$20.11</div>
-	        </div>
-	        <div class="pizza">
-		        <div class="pizza-img"><a href="#" tabindex="0"><img src="${pizzasPictures['pizza5.jpg']}" alt="Greek Pizza"></a></div>
-		        <time class="pizza-time">11:18:34</time>
-		        <div class="pizza-queue" >#5</div>
-		        <div class="pizza-eta" >ETA: 12 min</div>
-		        <div class="pizza-price" >$21.33</div>
-	        </div>
-	        <div class="pizza">
-		        <div class="pizza-img"><a href="#" tabindex="0"><img src="${pizzasPictures['pizza6.jpg']}" alt="California Pizza"></a></div>
-		        <time class="pizza-time">11:27:42</time>
-		        <div class="pizza-queue" >#6</div>
-		        <div class="pizza-eta" >ETA: 9 min</div>
-		        <div class="pizza-price" >$8.12</div>
-	        </div>
-	        <div class="pizza">
-		        <div class="pizza-img"><a href="#" tabindex="0"><img src="${pizzasPictures['pizza7.jpg']}" alt="Tomato Pie"></a></div>
-		        <time class="pizza-time">11:33:45</time>
-		        <div class="pizza-queue" >#7</div>
-		        <div class="pizza-eta" >ETA: 11 min</div>
-		        <div class="pizza-price" >$12.12</div>
-	        </div>
-	        <div class="pizza">
-		        <div class="pizza-img"><a href="#" tabindex="0"><img src="${pizzasPictures['pizza8.jpg']}" alt="Alternative Pizza Type"></a></div>
-		        <time class="pizza-time">11:42:01</time>
-		        <div class="pizza-queue" >#8</div>
-		        <div class="pizza-eta" >ETA: 7 min</div>
-		        <div class="pizza-price" >$7.40</div>
-	        </div>
-	    </div>`;
-    }
+		const { waiting, pizzas } = this.state;
+
+		let content = '';
+
+		if (pizzas.length) {
+			content = `<div class="pizzas">` + pizzas.map(pizza => {
+				return `
+				<div class="pizza">
+					<div class="pizza-img">
+						<a href="${STORE.domen + pizza.img_url}" tabindex="0" title="${pizza.name}, ${pizza.description}">
+							<img src="${STORE.domen + pizza.img_url}" alt="${pizza.name}, ${pizza.description}">
+						</a>
+					</div>
+		        	<time class="pizza-time">00:00:00</time>
+		        	<div class="pizza-queue">#1</div>
+		        	<div class="pizza-eta">ETA: # min</div>
+		        	<div class="pizza-price">$ ${pizza.price}</div>
+	        	</div>`;
+			}).join('') + `</div>`;
+		}
+
+		return !waiting ? content : waitingbar;
+	}
 }
 
 export default List;
