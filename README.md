@@ -17,7 +17,7 @@ Pizza App
 *for example*
 * open [pizza's dashboard](https://ermondel.github.io/pizza-app/#/list) page first in one browser
 * open [pizza create](https://ermondel.github.io/pizza-app/#/pizza) page in another browser
-* first in one browser create pizza and submit
+* first in one browser create pizza and submit *(note: ingredients max 6 and form of creation temporarily without validation)*
 * in another browser see list of accepted pizzas on dashboard
 
 ### Pages
