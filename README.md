@@ -13,11 +13,18 @@ Pizza App
 | 3 | testuserthree | testuserthree789 |  testuserthree@ukr.net |
 | 4 | testuserfour | testuserfour890 |  testuserfour@ukr.net |
 
+### Pizza's dashboard on websockets
+*for example*
+* open [pizza's dashboard](https://ermondel.github.io/pizza-app/#/list) page first in one browser
+* open [pizza create](https://ermondel.github.io/pizza-app/#/pizza) page in another browser
+* first in one browser create pizza and submit
+* in another browser see list of accepted pizzas on dashboard
+
 ### Pages
 
 Page | Url | Description | Auth required |
 | --- | --- | --- | --- |
-| [list](https://ermondel.github.io/pizza-app/#/list) | `https://ermondel.github.io/pizza-app/#/list` | pizzas dashboard |  :heavy_check_mark: |
+| [list](https://ermondel.github.io/pizza-app/#/list) | `https://ermondel.github.io/pizza-app/#/list` | pizza's dashboard (websockets) |  :heavy_check_mark: |
 | [user](https://ermondel.github.io/pizza-app/#/user) | `https://ermondel.github.io/pizza-app/#/user` | user info |  :heavy_check_mark: |
 | [pizza](https://ermondel.github.io/pizza-app/#/pizza) | `https://ermondel.github.io/pizza-app/#/pizza` | create pizza |  :heavy_check_mark: |
 | [sign in](https://ermondel.github.io/pizza-app/#/signin) | `https://ermondel.github.io/pizza-app/#/signin` | sign in |  :heavy_multiplication_x: |
