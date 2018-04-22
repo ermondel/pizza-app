@@ -21,10 +21,14 @@ export const canvasToFile = (canvas, mimeType = 'image/png') => {
 export const loadImage = (name, path) => {
 	return new Promise((resolve, reject) => {
 		const image = new Image();
-		image.src = path;
 		image.crossOrigin = 'anonymous';
 		image.onload = () => resolve({name, image});
 		image.onerror = (e) => reject(e);
+		image.src = path;
+		if (image.complete || image.complete === undefined ) {
+			image.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+			image.src = path;
+		}
 	});
 };
 
