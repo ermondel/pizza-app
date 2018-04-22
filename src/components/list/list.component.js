@@ -1,6 +1,6 @@
 /**
  * List Component
- * version 0.41
+ * version 0.42
  */
 import Component  from '../../component';
 import { STORE }  from '../../services/store.service';
@@ -95,6 +95,8 @@ class List extends Component {
 		        	<div class="pizza-price">$ ${pizza.price}</div>
 	        	</div>`;
 			}).join('') + `</div>`;
+		} else {
+			content = 'No pizzas in the queue.';
 		}
 
 		return !waiting ? content : waitingbar;
