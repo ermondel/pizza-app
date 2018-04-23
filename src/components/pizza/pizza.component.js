@@ -1,12 +1,13 @@
 /**
  * Pizza Component
- * version 0.77
+ * version 0.79
  */
-import Component  from '../../component';
-import PizzaForm  from './pizza.form.component';
-import PizzaPane  from './pizza.pane.component';
-import { STORE }  from '../../services/store.service';
-import { ROUTER } from '../../services/router.service';
+import Component    from '../../component';
+import PizzaForm    from './pizza.form.component';
+import PizzaPane    from './pizza.pane.component';
+import { AUTH }     from '../../services/auth.service';
+import { STOREAPI } from '../../services/store.api.service';
+import { ROUTER }   from '../../services/router.service';
 import { waitingbar, loadImage, canvasToFile } from '../../utils';
 
 class Pizza extends Component {
@@ -14,11 +15,11 @@ class Pizza extends Component {
         super(props);
 
         this.state = {
-            size: 60,
-            ingredients: [],
-            tags: [],
-            pizza_sheet: null,
-            waiting: true,
+            size        : 60,
+            ingredients : [],
+            tags        : [],
+            pizza_sheet : null,
+            waiting     : true,
         };
 
         this.container = document.createElement('main');
@@ -45,35 +46,34 @@ class Pizza extends Component {
     }
 
     init() {
-        let ingredients = [];
-        let tags = [];
-        let pizza_sheet = null;
+        let nextState = {
+            ingredients : [],
+            tags        : [],
+            pizza_sheet : null,
+            waiting     : true,
+        };
 
-        Promise.all([
-            STORE.ingredients(),
-            STORE.tags(),
-            loadImage('pizza_sheet', 'https://pizza-tele.ga/static/images/pizza.png'),
-        ]).then(data => {
-            // load ingredients, tags and image of pizza sheet
-            if (data[0].error || data[1].error) ROUTER.navigateTo('/signin'); // 4** error Wrong authorization data
-            ingredients = data[0].results;
-            tags        = data[1].results;
-            pizza_sheet = data[2].image;
-            return data;
-        }).then(data => {
-            // preload images of ingredients
-            const ingrs = data[0].results;
-            const loadImages = ingrs.map(ingredient => loadImage(ingredient.name, 'https://pizza-tele.ga/'+ingredient.image_url));
-            return Promise.all(loadImages);
-        }).then(images => {
-            // add images to ingredients ..
-            images.forEach((image, i) => ingredients[i].image = image.image);
-            // and updateState :)
-            this.updateState({ ingredients, tags, pizza_sheet, waiting: false });
+        loadImage('pizza_sheet', STOREAPI.pizzaSheetURL).then(img => {
+            return img.image;
+        }).then(image => {
+            nextState.pizza_sheet = image;
+            return STOREAPI.ingredients(AUTH.token);
+        }).then(ingredients => {
+            if (ingredients.error) throw new Error('auth');
+            nextState.ingredients = ingredients.results;
+            return STOREAPI.tags(AUTH.token);
+        }).then(tags => {
+            if (tags.error) throw new Error('auth');
+            nextState.tags = tags.results;
+            return Promise.all(nextState.ingredients.map(ingr => loadImage(ingr.name, STOREAPI.domen + ingr.image_url)));
+        }).then(ingredientsImages => {
+            ingredientsImages.forEach((img, i) => nextState.ingredients[i].image = img.image);
+            nextState.waiting = false;
+            this.updateState(nextState);
         }).catch(error => {
-            // errors
+            if (error.message == 'system') ROUTER.navigateTo('/503');
+            if (error.message == 'auth') ROUTER.navigateTo('/signin');
             console.log(error);
-            ROUTER.navigateTo('/503');
         });
     }
 

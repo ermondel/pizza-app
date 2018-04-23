@@ -23,7 +23,7 @@ export const loadImage = (name, path) => {
 		const image = new Image();
 		image.crossOrigin = 'anonymous';
 		image.onload = () => resolve({name, image});
-		image.onerror = (e) => reject(e);
+		image.onerror = (e) => reject(new Error('system'));
 		image.src = path;
 		if (image.complete || image.complete === undefined ) {
 			image.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";

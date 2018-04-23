@@ -1,10 +1,10 @@
 /**
  * List Component
- * version 0.42
+ * version 0.43
  */
-import Component  from '../../component';
-import { STORE }  from '../../services/store.service';
-import { ROUTER } from '../../services/router.service';
+import Component    from '../../component';
+import { STOREAPI } from '../../services/store.api.service';
+import { ROUTER }   from '../../services/router.service';
 import { waitingbar } from '../../utils';
 
 class List extends Component {
