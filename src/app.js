@@ -1,6 +1,6 @@
 /**
  * App Component
- * version 0.44
+ * version 0.5
  */
 import Component       from './component';
 import HeaderComponent from './components/header/header.component';
@@ -29,6 +29,7 @@ class App extends Component {
     handlerHashchange(e) {
         const route = ROUTER.getRoute(e);
         if (route) {
+            if (this.state.content) this.state.content.unmount();
             document.title = 'Pizza App :: ' + route.id;
             const content  = new route.component();
             content.init();

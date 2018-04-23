@@ -1,6 +1,6 @@
 /**
  * Component
- * version 2.0
+ * version 2.1
  */
 class Component {
 	constructor(props) {
@@ -41,11 +41,17 @@ class Component {
 		return this.container;
 	}
 
+	unmount() {
+		this.onBeforeUnmount();
+	}
+
 	//
 
 	render() {}
 
 	init() {}
+
+	onBeforeUnmount() {}
 }
 
 export default Component;
