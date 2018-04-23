@@ -1,6 +1,6 @@
 /**
  * Auth Service
- * version 1.88
+ * version 2.2
  */
 class AuthService {
 	constructor() {
@@ -26,30 +26,6 @@ class AuthService {
 		localStorage.setItem('claims', JSON.stringify(claims));
 	}
 
-	initpost(userData) {
-		const init  = {};
-		init.method = 'POST';
-
-		if (userData) init.body = JSON.stringify(userData);
-		
-		init.headers = new Headers();
-		init.headers.append('content-type', 'application/json');
-
-		return init;
-	}
-
-	initget(token) {
-		const init  = {};
-		init.method = 'GET';
-		
-		init.headers = new Headers();
-		init.headers.append('content-type', 'application/json');
-		
-		if (token) init.headers.append('Authorization', `Bearer ${token}`);
-
-		return init;
-	}
-
 	isAuthorized() {
 		if (this.tokenExpired()) {
 			this.clearStorage();
@@ -73,6 +49,11 @@ class AuthService {
 		localStorage.removeItem('claims');
 	}
 
+	/**
+	 * Decode claims (middle part of the token) from token and return it
+	 * @param string token 
+	 * https://github.com/lempiy/Kottans-Pizza-Api/tree/master/docs#general-info
+	 */
 	getClaims(token) {
 		if (token) 
 		{
@@ -83,49 +64,14 @@ class AuthService {
 		return {};
 	}
 
-	// Request body {"username":"str","password":"str"}
-	signin(userData) {
-		return fetch('https://pizza-tele.ga/api/v1/user/login', this.initpost(userData)).then(response => {
-			// success response status 200 ok  OR  4** client error
-			const status_code = String(response.status).charAt(0);
-			if (response.status == 200 || status_code == 4) return response.json();
-			throw new Error();
-		}).then(data => {
-			if (data.success) {
-				this.token  = data.token;
-				this.claims = this.getClaims(data.token);
-			}
-			return data;
-		});
-	}
-
-	// Request body {"username":"str","password":"str","password_repeat":"str","email":"str","store_id":int,"store_password":"str"}
-	signup(userData) {
-		return fetch('https://pizza-tele.ga/api/v1/user/create', this.initpost(userData)).then(response => {
-			// success response status 201 created  OR  4** client error
-			const status_code = String(response.status).charAt(0);
-			if (response.status == 201 || status_code == 4) return response.json();
-			throw new Error();
-		});
-	}
-
-	// Request body None
-	userinfo() {
-		return fetch('https://pizza-tele.ga/api/v1/user/my_info', this.initget(this.token)).then(response => {
-			// success response status 200 ok  OR  4** client error
-			const status_code = String(response.status).charAt(0);
-			if (response.status == 200 || status_code == 4) return response.json();
-			throw new Error();
-		});
-	}
-
-	// Request body None
-	getstores() {
-		return fetch('https://pizza-tele.ga/api/v1/store/list').then(response => {
-			// success response status 200 ok
-			if (response.status == 200) return response.json();
-			throw new Error();
-		});
+	/**
+	 * Save token in app and save claims (middle part of the token: exp, username, uuid)
+	 * @param string token 
+	 * https://github.com/lempiy/Kottans-Pizza-Api/tree/master/docs#general-info
+	 */
+	saveToken(token) {
+		this.token = token;
+		this.claims = this.getClaims(token);
 	}
 }
 

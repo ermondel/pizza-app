@@ -1,11 +1,12 @@
 /**
  * Signup Component
- * version 0.9
+ * version 1.0
  */
-import Component      from '../../component';
-import SignupForm     from './signup.form.component';
-import { AUTH }       from '../../services/auth.service';
-import { ROUTER }     from '../../services/router.service';
+import Component   from '../../component';
+import SignupForm  from './signup.form.component';
+import { AUTH }    from '../../services/auth.service';
+import { AUTHAPI } from '../../services/auth.api.service';
+import { ROUTER }  from '../../services/router.service';
 import { waitingbar } from '../../utils';
 
 class Signup extends Component {
@@ -27,28 +28,30 @@ class Signup extends Component {
 	}
 
 	init() {
-		AUTH.getstores().then(stores => {
+		AUTHAPI.getstores().then(stores => {
 			if (stores && stores.length > 0) {
 				this.updateState({ stores, errors: [], waiting: false });
 			} else {
 				ROUTER.navigateTo('/503');
 			}
 		}).catch(error => {
-			ROUTER.navigateTo('/503');
+			if (error.message == 'system') ROUTER.navigateTo('/503');
+			console.log(error);
 		});
 	}
 
 	onSubmitForm(userData) {
 		this.updateState({ errors: [], waiting: true });
 
-		AUTH.signup(userData).then(data => {
+		AUTHAPI.signup(userData).then(data => {
 			if (data.success) {
 				ROUTER.navigateTo('/signup/successful');
 			} else {
 				this.updateState({ errors: data.validations, waiting: false });
 			}
 		}).catch(error => {
-			ROUTER.navigateTo('/503');
+			if (error.message == 'system') ROUTER.navigateTo('/503');
+			this.updateState({ errors: [ error.message ], waiting: false });
 		});
 	}
 

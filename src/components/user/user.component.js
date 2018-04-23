@@ -1,11 +1,12 @@
 /**
  * User Component
- * version 0.9
+ * version 1.0
  */
-import Component      from '../../component';
-import { AUTH }       from '../../services/auth.service';
-import { ROUTER }     from '../../services/router.service';
-import { waitingbar } from '../../utils';
+import Component   from '../../component';
+import { AUTH }    from '../../services/auth.service';
+import { AUTHAPI } from '../../services/auth.api.service';
+import { ROUTER }  from '../../services/router.service';
+import { waitingbar, DDMonthYYYYhhmm } from '../../utils';
 
 class User extends Component {
     constructor(props) {
@@ -21,14 +22,15 @@ class User extends Component {
     }
 
     init() {
-        AUTH.userinfo().then(data => {
+        AUTHAPI.userinfo(AUTH.token).then(data => {
             if (!data.error) {
                 this.updateState({ data, waiting: false });
             } else {
                 ROUTER.navigateTo('/signin');
             }
 		}).catch(error => {
-			ROUTER.navigateTo('/503');
+            if (error.message == 'system') ROUTER.navigateTo('/503');
+            console.log(error);
         });
     }
 
@@ -37,19 +39,13 @@ class User extends Component {
 
         if (waiting) return waitingbar;
 
-        const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        let ca = new Date(data.created_at);
-        let ll = new Date(data.last_login);
-        const created_at = `${ca.getDate()} ${months[ca.getMonth()]} ${ca.getFullYear()}, ${ca.getHours()}:${ca.getMinutes()}`;
-        const last_login = `${ll.getDate()} ${months[ll.getMonth()]} ${ll.getFullYear()}, ${ll.getHours()}:${ll.getMinutes()}`;
-
         return `
         <div id="userinfo">
             <h1>User</h1>
             <div>${data.username}</div>
             <div>${data.email}</div>
-            <div><span>created at:</span> ${created_at}</div>
-            <div><span>last login:</span> ${last_login}</div>
+            <div><span>created at:</span> ${DDMonthYYYYhhmm(data.created_at)}</div>
+            <div><span>last login:</span> ${DDMonthYYYYhhmm(data.last_login)}</div>
         </div>`;
     }
 }

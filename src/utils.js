@@ -60,6 +60,15 @@ export const clock = (id, init) => {
 };
 
 /**
+ * Format date to e.g. " 22 March 2018, 10:52 "
+ */
+export const DDMonthYYYYhhmm = fromDate => {
+	const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+	const toDate = new Date(fromDate);
+	return `${toDate.getDate()} ${months[toDate.getMonth()]} ${toDate.getFullYear()}, ${toDate.getHours()}:${toDate.getMinutes()}`;
+}
+
+/**
  * Validate form input elements
  * @elements e.g. event.target.elements
  * @rules set of rules for checking
