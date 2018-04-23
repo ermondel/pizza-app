@@ -1,6 +1,6 @@
 /**
  * Store Service
- * version 0.42
+ * version 0.5
  */
 class StoreApiService {
     constructor() {

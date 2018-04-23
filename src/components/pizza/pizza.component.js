@@ -1,6 +1,6 @@
 /**
  * Pizza Component
- * version 0.79
+ * version 0.9
  */
 import Component    from '../../component';
 import PizzaForm    from './pizza.form.component';
@@ -92,46 +92,58 @@ class Pizza extends Component {
     }
 
     onSubmit(name, description) {
-        const { size, ingredients, tags } = this.state;
-
-        // ingredients IDs
-        const ingredientsChecked = ingredients.filter(ingredient => ingredient.checked);
-        let ingredientsIDs = ingredientsChecked.map(ingredient => ingredient.id);
-        ingredientsIDs = JSON.stringify(ingredientsIDs);
-
-        // tags IDs
-        const tagsChecked = tags.filter(tag => tag.checked);
-        let tagsIDs = tagsChecked.map(tag => tag.id);
-        tagsIDs = JSON.stringify(tagsIDs);
-
-        canvasToFile(this.canvas).then(image => {
-            let formData = new FormData();
-            formData.append('name', name);
-            formData.append('description', description);
-            formData.append('size', Number(size));
-            formData.append('ingredients', ingredientsIDs);
-            formData.append('tags', tagsIDs);
-            formData.append("image", image, "my_canvas.png");
-            return formData;
-        }).then(formData => {
-            return STORE.create(formData);
+        canvasToFile(this.canvas).then(img => {
+            return STOREAPI.create(AUTH.token, this.pizzaFormData(name, description, img));
         }).then(response => {
             if (response.success) {
                 ROUTER.navigateTo('/pizza/successful');
             } else {
-                console.log(response.error);
+                console.log('app error', response.error);
             }
         }).catch(error => {
-            console.log(error.name + ': ' + error.message);
-            ROUTER.navigateTo('/503');
+            console.log('app error', error);
         });
     }
 
-    checkedById(fields, id, checked) {
-        for (let field of fields) {
-            if (field.id == id) { field.checked = checked; break; }
-        }
-        return fields;
+    /**
+     * Get FormData
+     * @param string name 
+     * @param string description 
+     * @param blob image 
+     */
+    pizzaFormData(name, description, image) {
+        const { size, ingredients, tags } = this.state;
+        const formData = new FormData();
+
+        formData.append('name', name);
+        formData.append('size', Number(size));
+        formData.append('description', description);
+        formData.append('image', image, "my_canvas.png");
+        formData.append('tags', JSON.stringify(this.getCheckedIDs(tags)));
+        formData.append('ingredients', JSON.stringify(this.getCheckedIDs(ingredients)));
+
+        return formData;
+    }
+
+    /**
+     * Get IDs from list (elem of ID must be checked)
+     * @param array list 
+     */
+    getCheckedIDs(list) {
+        let result = [];
+        for (let elem of list) if (elem.checked) result.push(elem.id);
+        return result;
+    }
+
+    /**
+     * Switch checked state of lists element by id
+     * @param array list 
+     * @param int id 
+     * @param boolean checked 
+     */
+    checkedById(list, id, checked) {
+        for (let elem of list) if (elem.id == id) { elem.checked = checked; break; }
+        return list;
     }
 
     calculatePrice() {
