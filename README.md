@@ -12,6 +12,7 @@ Pizza App
 | 2 | testusertwo | testusertwo456 |  testusertwo@ukr.net |
 | 3 | testuserthree | testuserthree789 |  testuserthree@ukr.net |
 | 4 | testuserfour | testuserfour890 |  testuserfour@ukr.net |
+| 5 | testuserfive | testuserfive901 |  testuserfive@ukr.net |
 
 ### Pizza's dashboard on websockets
 *for example*
