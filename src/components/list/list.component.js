@@ -1,8 +1,9 @@
 /**
  * List Component
- * version 0.43
+ * version 0.5
  */
 import Component    from '../../component';
+import { AUTH }     from '../../services/auth.service';
 import { STOREAPI } from '../../services/store.api.service';
 import { ROUTER }   from '../../services/router.service';
 import { waitingbar } from '../../utils';
@@ -26,24 +27,25 @@ class List extends Component {
             onmessage: this.onMessageSocket.bind(this),
             onerror: this.onErrorSocket.bind(this),
         };
-        window.addEventListener('unload', this.onWindowUnload.bind(this));
+        // window.addEventListener('unload', this.onWindowUnload.bind(this));
 	}
 	
 	init() {
-		STORE.ticket().then(response => {
-			if (response.success) return new WebSocket(STORE.websocketURL + '?key=' + response.token);
-			throw new Error('auth_required');
+		STOREAPI.ticket(AUTH.token).then(ticket => {
+			if (!ticket.success) throw new Error('auth');
+			return new WebSocket(STOREAPI.websocketURL + '?key=' + ticket.token);
 		}).then(socket => {
 			this.socket = socket;
 			Object.assign(this.socket, this.socketCallbacks);
-			return STORE.list();
-		}).then(response => {
-			if (!response.error) return response.results;
-			throw new Error('auth_required');
-		}).then(pizzas => {
-			this.updateState({ pizzas, waiting: false });
+			return STOREAPI.list(AUTH.token);
+		}).then(list => {
+			if (list.error) throw new Error('auth');
+			this.updateState({ pizzas: list.results, waiting: false });
 		}).catch(error => {
-			console.log(error);
+			this.socket.close();
+			if (error.message == 'system') ROUTER.navigateTo('/503');
+            if (error.message == 'auth') ROUTER.navigateTo('/signin');
+            console.log(error);
 		});
 	}
 
@@ -73,7 +75,11 @@ class List extends Component {
     
     onWindowUnload(e) {
         this.socket.close();
-    }
+	}
+	
+	onBeforeUnmount() {
+		this.socket.close();
+	}
 
     render() {
 		const { waiting, pizzas } = this.state;
@@ -85,8 +91,8 @@ class List extends Component {
 				return `
 				<div class="pizza">
 					<div class="pizza-img">
-						<a href="${STORE.domen + pizza.img_url}" tabindex="0" title="${pizza.name}, ${pizza.description}">
-							<img src="${STORE.domen + pizza.img_url}" alt="${pizza.name}, ${pizza.description}">
+						<a href="${STOREAPI.domen + pizza.img_url}" tabindex="0" title="${pizza.name}, ${pizza.description}">
+							<img src="${STOREAPI.domen + pizza.img_url}" alt="${pizza.name}, ${pizza.description}">
 						</a>
 					</div>
 		        	<time class="pizza-time">00:00:00</time>
