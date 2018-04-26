@@ -1,12 +1,10 @@
 /**
  * Header Component
- * version 0.9
- * props
- *  userAuth
- *  path
+ * version 1.0
+ * props: userAuth, path
  */
 import Component from '../../component';
-import HeaderImg from './header-img/*';
+import logo from '../../style/img/logo.png';
 import { clock } from '../../utils';
 
 class Header extends Component {
@@ -35,6 +33,7 @@ class Header extends Component {
         if (userAuth && path !== '/logout') {
             navigate = `
             <nav>
+                <a href="#/pizza" title="Create Pizza" tabindex="0"${(path === '/pizza' ? `class="current"` : '')}><span>Create</span></a>
                 <a href="#/list" title="Dashboard" tabindex="0"${(path === '/list' ? `class="current"` : '')}><span>Dashboard</span></a>
                 <a href="#/user" title="User info" tabindex="0"${(path === '/user' ? `class="current"` : '')}><span>User</span></a>
                 <a href="#/logout" id="logout-link" title="Logout" tabindex="0"><span>Logout</span></a>
@@ -43,7 +42,7 @@ class Header extends Component {
 
         return `
         <div id="header-inner">
-            <div id="logo-wrap"><a href="#/" tabindex="0" aria-label="home"><img src="${HeaderImg['logo.png']}" alt="Pizza App Logo"></a></div>
+            <div id="logo-wrap"><a href="#/" tabindex="0" aria-label="home"><img src="${logo}" alt="Pizza App Logo"></a></div>
             <div id="dial-wrap"><span id="dial">${(clock('dial', true))}</span></div>
             <div id="nav-wrap">${navigate}</div>
         </div>`;
