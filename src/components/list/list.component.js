@@ -85,7 +85,6 @@ class List extends Component {
 	timerETA() {
 		if (this.socket && (this.socket.readyState == 0 || this.socket.readyState == 1)) {
 			minuteTimer().then(result => {
-				console.log('MINUTE');
 				this.updateState();
 				this.timerETA();
 			});
