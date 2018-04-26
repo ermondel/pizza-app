@@ -1,12 +1,12 @@
 /**
  * List Component
- * version 0.5
+ * version 0.652
  */
 import Component    from '../../component';
 import { AUTH }     from '../../services/auth.service';
 import { STOREAPI } from '../../services/store.api.service';
 import { ROUTER }   from '../../services/router.service';
-import { waitingbar } from '../../utils';
+import { waitingbar, getETA, minuteTimer, HHMMSS } from '../../utils';
 
 class List extends Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class List extends Component {
             onmessage: this.onMessageSocket.bind(this),
             onerror: this.onErrorSocket.bind(this),
         };
-        // window.addEventListener('unload', this.onWindowUnload.bind(this));
+    	window.addEventListener('unload', this.onWindowUnload.bind(this));
 	}
 	
 	init() {
@@ -41,26 +41,27 @@ class List extends Component {
 		}).then(list => {
 			if (list.error) throw new Error('auth');
 			this.updateState({ pizzas: list.results, waiting: false });
+			this.timerETA();
 		}).catch(error => {
-			this.socket.close();
+			this.closeSocket();
 			if (error.message == 'system') ROUTER.navigateTo('/503');
             if (error.message == 'auth') ROUTER.navigateTo('/signin');
             console.log(error);
 		});
 	}
 
-	onOpenSocket() {
-        console.log('websocket', 'connection open successful');
+	onOpenSocket(e) {
+		console.log('websocket', 'connection open successful');
     }
 
     onCloseSocket(event) {
-        if (event.wasClean) { console.log('websocket', 'connection close successful -');
+        if (event.wasClean) { console.log('websocket', 'connection close successful');
         } else { console.log('websocket', 'disconnect'); }
-        console.log('websocket', 'Code: ', event.code, 'reason: ', event.reason);
+		console.log('websocket', 'Code: ', event.code, 'reason: ', event.reason);
 	}
 	
 	onErrorSocket(error) {
-        console.log('websocket', 'error: ', error.message);
+		console.log('websocket', 'error: ', error.message);
     }
 
     onMessageSocket(event) {
@@ -74,11 +75,27 @@ class List extends Component {
     }
     
     onWindowUnload(e) {
-        this.socket.close();
+        this.closeSocket();
 	}
 	
 	onBeforeUnmount() {
-		this.socket.close();
+		this.closeSocket();
+	}
+
+	timerETA() {
+		if (this.socket && (this.socket.readyState == 0 || this.socket.readyState == 1)) {
+			minuteTimer().then(result => {
+				console.log('MINUTE');
+				this.updateState();
+				this.timerETA();
+			});
+		}
+	}
+
+	closeSocket() {
+		if (this.socket && (this.socket.readyState == 0 || this.socket.readyState == 1)) {
+			this.socket.close();
+		}
 	}
 
     render() {
@@ -88,6 +105,9 @@ class List extends Component {
 
 		if (pizzas.length) {
 			content = `<div class="pizzas">` + pizzas.map(pizza => {
+				const ETA = getETA(new Date(), pizza.time_prepared);
+				const pizza_eta = `<span class="${ETA.class}">${ETA.ready ? `ready` : `ETA: ${ETA.str}`}</span>`;
+
 				return `
 				<div class="pizza">
 					<div class="pizza-img">
@@ -95,9 +115,9 @@ class List extends Component {
 							<img src="${STOREAPI.domen + pizza.img_url}" alt="${pizza.name}, ${pizza.description}">
 						</a>
 					</div>
-		        	<time class="pizza-time">00:00:00</time>
-		        	<div class="pizza-queue">#1</div>
-		        	<div class="pizza-eta">ETA: # min</div>
+		        	<time class="pizza-time">${HHMMSS(pizza.created_date)}</time>
+		        	<div class="pizza-queue">##</div>
+		        	<div class="pizza-eta">${pizza_eta}</div>
 		        	<div class="pizza-price">$ ${pizza.price}</div>
 	        	</div>`;
 			}).join('') + `</div>`;
