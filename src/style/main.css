@@ -1,6 +1,6 @@
 /**
  * Main
- * version 1.6
+ * version 1.7
  */
 html { background-color: #455A64; }
 body { font-family: Arial, sans-serif; font-size: 14px; color: black; background-color: white; }
@@ -80,6 +80,9 @@ border: 1px solid #E0E0E0;
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 border-radius: 5px; }
+.pizza:hover {
+	background-color: #f5f5f5;
+}
 /* 'envelope', twin boxes, first bottom and second top */
 .pizza::before { content: ''; position: absolute; width: 20px; height: 20px; top: -1px; left: -1px; z-index: 2; background-color: white; }
 .pizza::after { content: ''; position: absolute; width: 30px; height: 30px; top: 4px; left: 4px; z-index: 3; border-left: 1px solid #E0E0E0;
@@ -95,10 +98,17 @@ border-radius: 4px;
 -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; }
 .pizza .pizza-img a:focus { outline: none; border-color: #FF6600; }
 .pizza .pizza-img a img { display: block; text-align: center; width: 100%; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%; }
-.pizza .pizza-time { width: 60%; float: left; margin-bottom: 1em; text-transform: uppercase; }
+.pizza .pizza-time { width: 60%; float: left; margin-bottom: 1em; cursor: default; }
+.pizza .pizza-time span { cursor: help; }
+.pizza .pizza-time .time { text-transform: uppercase; cursor: default; }
 .pizza .pizza-eta { width: 60%; float: left; margin-bottom: 1em; }
 .pizza .pizza-queue { width: 40%; float: left; text-align: right; margin-bottom: 1em; }
 .pizza .pizza-price { width: 40%; float: left; text-align: right; margin-bottom: 1em; }
+/* ETA */
+.pizza .pizza-eta .ready { color: #FF6600; text-transform: uppercase; }
+.pizza .pizza-eta .left-one { color: orangered; }
+.pizza .pizza-eta .left-one-five { color: green; }
+.pizza .pizza-eta .left-more-five { color: black; }
 /* media */
 @media screen and (min-width: 497px) {
 	.pizzas { flex-flow: row wrap; justify-content: space-around; justify-content: space-evenly; }

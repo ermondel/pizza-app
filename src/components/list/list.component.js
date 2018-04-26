@@ -1,6 +1,6 @@
 /**
  * List Component
- * version 0.652
+ * version 0.66
  */
 import Component    from '../../component';
 import { AUTH }     from '../../services/auth.service';
@@ -105,8 +105,12 @@ class List extends Component {
 
 		if (pizzas.length) {
 			content = `<div class="pizzas">` + pizzas.map(pizza => {
-				const ETA = getETA(new Date(), pizza.time_prepared);
-				const pizza_eta = `<span class="${ETA.class}">${ETA.ready ? `ready` : `ETA: ${ETA.str}`}</span>`;
+				let ETA = getETA(new Date(), pizza.time_prepared), pizzaETA = '';
+				if (ETA.ready) {
+					pizzaETA = `<span class="${ETA.class}">ready</span>`;
+				} else {
+					pizzaETA = `ETA: <span class="${ETA.class}">${ETA.str}</span>`;
+				}
 
 				return `
 				<div class="pizza">
@@ -115,9 +119,9 @@ class List extends Component {
 							<img src="${STOREAPI.domen + pizza.img_url}" alt="${pizza.name}, ${pizza.description}">
 						</a>
 					</div>
-		        	<time class="pizza-time">${HHMMSS(pizza.created_date)}</time>
+		        	<time class="pizza-time"><span title="pizza create time">ct</span> <span class="time">${HHMMSS(pizza.created_date)}</span></time>
 		        	<div class="pizza-queue">##</div>
-		        	<div class="pizza-eta">${pizza_eta}</div>
+		        	<div class="pizza-eta">${pizzaETA}</div>
 		        	<div class="pizza-price">$ ${pizza.price}</div>
 	        	</div>`;
 			}).join('') + `</div>`;
