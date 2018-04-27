@@ -1,6 +1,6 @@
 /**
  * Pizza Form Component
- * version 0.49
+ * version 0.498
  * props: size, ingredients, tags, price,
  * onChangeIngredient, onChangeTag, onChangeSize, onSubmit
  */
@@ -48,15 +48,31 @@ class PizzaForm extends Component {
         this.props.onSubmit(name, description);
     }
 
-    render() {
-        const { size, ingredients, tags, price } = this.props;
-        const { name, description } = this.state.elements;
+    renderIngredients() {
+        const { ingredients } = this.props;
 
-        const ingredients_checkboxes = ingredients.map(ingr => `
+        // number of ingredients selected
+        let ingredientsCheckedCount = 0;
+        for (let ingredient of ingredients) if (ingredient.checked) ingredientsCheckedCount++;
+
+        return ingredients.map(ingr => {
+            // html attributes for checkbox
+            const attr = {
+                checked: ingr.checked ? ' checked="checked"' : '',
+                disabled: !ingr.checked && ingredientsCheckedCount >= 6 ? ' disabled' : '',
+            };
+
+            return `
             <label title="${ingr.description}">
-                <input type="checkbox" name="ingredient" value="${ingr.id}"${(ingr.checked ? 'checked="checked"' : '')}>
+                <input type="checkbox" name="ingredient" value="${ingr.id}"${attr.checked}${attr.disabled}>
                 <span class="ingredient"><img src="${ingr.image.src}" alt="${ingr.description}"><span>${ingr.name}</span></span>
-            </label>`).join('');
+            </label>`;
+        }).join('');
+    }
+
+    render() {
+        const { size, tags, price } = this.props;
+        const { name, description } = this.state.elements;
 
         const tags_checkboxes = tags.map(tag => `
             <label title="${tag.description}">
@@ -72,7 +88,7 @@ class PizzaForm extends Component {
             <label><input type="radio" name="size" value="60"${(size == 60 ? 'checked="checked"' : '')}> <span>60°</span></label>
         </div>
         <div id="ingredient-box">
-            ${ingredients_checkboxes}
+            ${this.renderIngredients()}
         </div>
         <div id="tag-box">
             ${tags_checkboxes}

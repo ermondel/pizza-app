@@ -1,6 +1,6 @@
 /**
  * Main
- * version 1.7
+ * version 1.8
  */
 html { background-color: #455A64; }
 body { font-family: Arial, sans-serif; font-size: 14px; color: black; background-color: white; }
@@ -188,6 +188,8 @@ cursor: pointer; float: left; border-radius: 3px; -moz-border-radius: 3px; -webk
 #create #ingredient-box .ingredient img { margin-right: 5px; }
 #create #ingredient-box .ingredient:hover { background-color: #ae4424; color: white; }
 #create #ingredient-box input[type=checkbox]:checked + span { background-color: #89C040; color: white; }
+#create #ingredient-box input[type=checkbox]:disabled + span { background-color: white; color: grey; cursor: default; }
+#create #ingredient-box input[type=checkbox]:disabled + span img { opacity: 0.4; }
 /* tag-box */
 #create #tag-box { margin-bottom: 30px; width: 100%; overflow: hidden; }
 #create #tag-box input[type=checkbox] { display: none; }
