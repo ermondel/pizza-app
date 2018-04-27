@@ -1,6 +1,6 @@
 /**
  * Pizza Form Component
- * version 0.498
+ * version 0.499
  * props: size, ingredients, tags, price,
  * onChangeIngredient, onChangeTag, onChangeSize, onSubmit
  */
@@ -70,15 +70,19 @@ class PizzaForm extends Component {
         }).join('');
     }
 
-    render() {
-        const { size, tags, price } = this.props;
-        const { name, description } = this.state.elements;
+    renderTags() {
+        const { tags } = this.props;
 
-        const tags_checkboxes = tags.map(tag => `
-            <label title="${tag.description}">
-                <input type="checkbox" name="tag" value="${tag.id}" ${(tag.checked ? 'checked="checked"' : '')}>
-                <span class="tag"><span>${tag.name}</span></span>
-            </label>`).join('');
+        return tags.map(tag => `
+        <label title="${tag.description}">
+            <input type="checkbox" name="tag" value="${tag.id}" ${(tag.checked ? 'checked="checked"' : '')}>
+            <span class="tag"><span>${tag.name}</span></span>
+        </label>`).join('');
+    }
+
+    render() {
+        const { size, price } = this.props;
+        const { name, description } = this.state.elements;
 
         return `
         <div id="size-box">
@@ -87,12 +91,8 @@ class PizzaForm extends Component {
             <label><input type="radio" name="size" value="45"${(size == 45 ? 'checked="checked"' : '')}> <span>45°</span></label>
             <label><input type="radio" name="size" value="60"${(size == 60 ? 'checked="checked"' : '')}> <span>60°</span></label>
         </div>
-        <div id="ingredient-box">
-            ${this.renderIngredients()}
-        </div>
-        <div id="tag-box">
-            ${tags_checkboxes}
-        </div>
+        <div id="ingredient-box">${this.renderIngredients()}</div>
+        <div id="tag-box">${this.renderTags()}</div>
         <div id="text-box">
             <label>
                 <span>Pizza name *</span>
