@@ -1,6 +1,6 @@
 /**
  * Pizza Form Component
- * version 0.499
+ * version 0.5
  * props: size, ingredients, tags, price,
  * onChangeIngredient, onChangeTag, onChangeSize, onSubmit
  */
