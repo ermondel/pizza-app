@@ -1,10 +1,7 @@
 /**
  * Signup Form
- * version 0.9
- * props
- *	errors
- *	stores
- *	onSubmitForm
+ * version 0.91
+ * props: errors, stores, onSubmitForm
  */
 import Component            from '../../component';
 import { validateElements } from '../../utils';

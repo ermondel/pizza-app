@@ -1,12 +1,12 @@
 /**
  * Pizza Component
- * version 0.9
+ * version 0.91
  */
 import Component    from '../../component';
 import PizzaForm    from './pizza.form.component';
 import PizzaPane    from './pizza.pane.component';
 import { AUTH }     from '../../services/auth.service';
-import { STOREAPI } from '../../services/store.api.service';
+import { STOREAPI } from '../../api/store.api';
 import { ROUTER }   from '../../services/router.service';
 import { waitingbar, loadImage, canvasToFile } from '../../utils';
 

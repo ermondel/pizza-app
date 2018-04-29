@@ -1,11 +1,11 @@
 /**
  * Signin Component
- * version 1.0
+ * version 1.1
  */
 import Component   from '../../component';
 import SigninForm  from './signin.form.component';
 import { AUTH }    from '../../services/auth.service';
-import { AUTHAPI } from '../../services/auth.api.service';
+import { AUTHAPI } from '../../api/auth.api';
 import { ROUTER }  from '../../services/router.service';
 import { waitingbar } from '../../utils';
 

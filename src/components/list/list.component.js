@@ -1,10 +1,10 @@
 /**
  * List Component
- * version 0.66
+ * version 0.67
  */
 import Component    from '../../component';
 import { AUTH }     from '../../services/auth.service';
-import { STOREAPI } from '../../services/store.api.service';
+import { STOREAPI } from '../../api/store.api';
 import { ROUTER }   from '../../services/router.service';
 import { waitingbar, getETA, minuteTimer, HHMMSS } from '../../utils';
 

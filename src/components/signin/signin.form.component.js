@@ -1,9 +1,7 @@
 /**
  * Signin Form
- * version 0.9
- * props
- *	errors
- *	onSubmitForm
+ * version 0.91
+ * props: errors, onSubmitForm
  */
 import Component            from '../../component';
 import { validateElements } from '../../utils';
