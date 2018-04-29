@@ -1,12 +1,13 @@
 /**
  * List Component
- * version 0.67
+ * version 0.68
  */
 import Component    from '../../component';
 import { AUTH }     from '../../services/auth.service';
 import { STOREAPI } from '../../api/store.api';
 import { ROUTER }   from '../../services/router.service';
-import { waitingbar, getETA, minuteTimer, HHMMSS } from '../../utils';
+import { waitingbar } from '../../utils';
+import { getETA, minuteTimer, HHMMSS } from '../../utils/time';
 
 class List extends Component {
     constructor(props) {
@@ -106,9 +107,9 @@ class List extends Component {
 			content = `<div class="pizzas">` + pizzas.map(pizza => {
 				let ETA = getETA(new Date(), pizza.time_prepared), pizzaETA = '';
 				if (ETA.ready) {
-					pizzaETA = `<span class="${ETA.class}">ready</span>`;
+					pizzaETA = `<span class="${ETA.cssclass}">ready</span>`;
 				} else {
-					pizzaETA = `ETA: <span class="${ETA.class}">${ETA.str}</span>`;
+					pizzaETA = `ETA: <span class="${ETA.cssclass}">${ETA.readable}</span>`;
 				}
 
 				return `

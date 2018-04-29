@@ -1,11 +1,11 @@
 /**
  * Header Component
- * version 1.0
+ * version 1.1
  * props: userAuth, path
  */
 import Component from '../../component';
 import logo from '../../style/img/logo.png';
-import { clock } from '../../utils';
+import { clock } from '../../utils/time';
 
 class Header extends Component {
     constructor(props) {

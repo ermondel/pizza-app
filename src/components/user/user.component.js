@@ -1,12 +1,13 @@
 /**
  * User Component
- * version 1.1
+ * version 1.2
  */
 import Component   from '../../component';
 import { AUTH }    from '../../services/auth.service';
 import { AUTHAPI } from '../../api/auth.api';
 import { ROUTER }  from '../../services/router.service';
-import { waitingbar, DDMonthYYYYhhmm } from '../../utils';
+import { waitingbar } from '../../utils';
+import { DDMonthYYYYhhmm } from '../../utils/time';
 
 class User extends Component {
     constructor(props) {
