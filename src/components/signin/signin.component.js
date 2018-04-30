@@ -7,7 +7,7 @@ import SigninForm  from './signin.form.component';
 import { AUTH }    from '../../services/auth.service';
 import { AUTHAPI } from '../../api/auth.api';
 import { ROUTER }  from '../../services/router.service';
-import { waitingbar } from '../../utils';
+import { waitingbar } from '../../utils/util';
 
 class Signin extends Component {
 	constructor(props) {

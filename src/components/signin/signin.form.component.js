@@ -4,7 +4,7 @@
  * props: errors, onSubmitForm
  */
 import Component            from '../../component';
-import { validateElements } from '../../utils';
+import { validateElements } from '../../utils/util';
 import { signinFormRules }  from './signin.form.rules';
 
 class SigninForm extends Component {

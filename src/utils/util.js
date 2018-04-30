@@ -1,7 +1,7 @@
 /**
  * Waiting bar
  */
-import img_waiting from './style/img/waiting.gif';
+import img_waiting from '../style/img/waiting.gif';
 export const waitingbar = `<div id="waiting"><img src="${img_waiting}" alt="waiting"></div>`;
 
 /**

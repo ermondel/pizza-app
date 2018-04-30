@@ -6,7 +6,7 @@ import Component    from '../../component';
 import { AUTH }     from '../../services/auth.service';
 import { STOREAPI } from '../../api/store.api';
 import { ROUTER }   from '../../services/router.service';
-import { waitingbar, USD } from '../../utils';
+import { waitingbar, USD } from '../../utils/util';
 import { getETA, minuteTimer, HHMMSS } from '../../utils/time';
 
 class List extends Component {

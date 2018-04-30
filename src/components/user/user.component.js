@@ -6,7 +6,7 @@ import Component   from '../../component';
 import { AUTH }    from '../../services/auth.service';
 import { AUTHAPI } from '../../api/auth.api';
 import { ROUTER }  from '../../services/router.service';
-import { waitingbar } from '../../utils';
+import { waitingbar } from '../../utils/util';
 import { DDMonthYYYYhhmm } from '../../utils/time';
 
 class User extends Component {

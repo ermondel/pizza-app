@@ -8,7 +8,7 @@ import PizzaPane    from './pizza.pane.component';
 import { AUTH }     from '../../services/auth.service';
 import { STOREAPI } from '../../api/store.api';
 import { ROUTER }   from '../../services/router.service';
-import { waitingbar, loadImage, canvasToFile, USD } from '../../utils';
+import { waitingbar, loadImage, canvasToFile, USD } from '../../utils/util';
 
 class Pizza extends Component {
     constructor(props) {
