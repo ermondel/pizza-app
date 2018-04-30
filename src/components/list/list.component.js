@@ -1,6 +1,6 @@
 /**
  * List Component
- * version 0.68
+ * version 0.7
  */
 import Component    from '../../component';
 import { AUTH }     from '../../services/auth.service';
@@ -41,7 +41,9 @@ class List extends Component {
 			return STOREAPI.list(AUTH.token);
 		}).then(list => {
 			if (list.error) throw new Error('auth');
-			this.updateState({ pizzas: list.results, waiting: false });
+			let pizzas = list.results;
+			pizzas.sort((a, b) => +(a.time_prepared < b.time_prepared) || +(a.time_prepared === b.time_prepared) - 1);
+			this.updateState({ pizzas, waiting: false });
 			this.timerETA();
 		}).catch(error => {
 			this.closeSocket();
@@ -104,13 +106,9 @@ class List extends Component {
 		let content = '';
 
 		if (pizzas.length) {
-			content = `<div class="pizzas">` + pizzas.map(pizza => {
+			content = `<div class="pizzas">` + pizzas.map((pizza, index) => {
 				let ETA = getETA(new Date(), pizza.time_prepared), pizzaETA = '';
-				if (ETA.ready) {
-					pizzaETA = `<span class="${ETA.cssclass}">ready</span>`;
-				} else {
-					pizzaETA = `ETA: <span class="${ETA.cssclass}">${ETA.readable}</span>`;
-				}
+				pizzaETA = ETA.ready ? `<span class="${ETA.cssclass}">ready</span>` : `ETA: <span class="${ETA.cssclass}">${ETA.readable}</span>`;
 
 				return `
 				<div class="pizza">
@@ -120,7 +118,7 @@ class List extends Component {
 						</a>
 					</div>
 		        	<time class="pizza-time"><span title="pizza create time">ct</span> <span class="time">${HHMMSS(pizza.created_date)}</span></time>
-		        	<div class="pizza-queue">##</div>
+		        	<div class="pizza-queue">#${pizzas.length - index}</div>
 		        	<div class="pizza-eta">${pizzaETA}</div>
 		        	<div class="pizza-price">$ ${pizza.price}</div>
 	        	</div>`;
