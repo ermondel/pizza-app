@@ -1,5 +1,4 @@
 /**
- * 
  * @param object start date 
  * @param object finish date 
  * @return object { hours, shift }
@@ -14,7 +13,6 @@ export const hoursDiff = (startDate, finishDate) => {
 }
 
 /**
- * 
  * @param object start date 
  * @param object finish date 
  * @return object { minutes, shift }
@@ -29,7 +27,6 @@ export const minutesDiff = (startDate, finishDate) => {
 }
 
 /**
- * 
  * @param int hours left 
  * @param int minutes left 
  * @return string '12 h 24 min'
@@ -42,7 +39,6 @@ export const readableETA = (hoursLeft, minutesLeft) => {
 }
 
 /**
- * 
  * @param int hours left 
  * @param int minutes left
  * @return string css class
@@ -71,15 +67,20 @@ export const getETA = (start, finish, cssclass = false) => {
     const sd  = new Date(start);
     const fd = new Date(finish);
 
-    let hoursLeft = hoursDiff(sd, fd);
-    let minutesLeft = minutesDiff(sd, fd);
+    let hoursLeft = { hours: 0 };
+    let minutesLeft = { minutes: 0 };
+    
+    if (sd < fd) {
+        hoursLeft = hoursDiff(sd, fd);
+        minutesLeft = minutesDiff(sd, fd);
 
-    if (minutesLeft.shift) hoursLeft.hours -= 1;
+        if (minutesLeft.shift) hoursLeft.hours -= 1;
+    }
 
     return {
-        hours: hoursLeft.hours,
+        hours    : hoursLeft.hours,
         minutes  : minutesLeft.minutes,
-        ready: hoursLeft.hours <= 0 && minutesLeft.minutes <= 0 ? true : false,
+        ready    : hoursLeft.hours <= 0 && minutesLeft.minutes <= 0 ? true : false,
         readable : readableETA(hoursLeft.hours, minutesLeft.minutes),
         cssclass : addETACSSClass(hoursLeft.hours, minutesLeft.minutes),
     };
