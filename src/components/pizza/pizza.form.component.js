@@ -1,6 +1,6 @@
 /**
  * Pizza Form Component
- * version 0.5
+ * version 0.52
  * props: size, ingredients, tags, price,
  * onChangeIngredient, onChangeTag, onChangeSize, onSubmit
  */
@@ -104,7 +104,7 @@ class PizzaForm extends Component {
             </label>
         </div>
         <div id="price-box">
-            Total price: <strong>$ ${price}</strong>
+            Total price: <strong>${price}</strong>
         </div>
         <div id="submit-box">
             <button class="box-radius-5 box-shadow-2">Submit</button>

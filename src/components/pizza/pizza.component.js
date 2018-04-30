@@ -1,6 +1,6 @@
 /**
  * Pizza Component
- * version 0.91
+ * version 0.93
  */
 import Component    from '../../component';
 import PizzaForm    from './pizza.form.component';
@@ -8,7 +8,7 @@ import PizzaPane    from './pizza.pane.component';
 import { AUTH }     from '../../services/auth.service';
 import { STOREAPI } from '../../api/store.api';
 import { ROUTER }   from '../../services/router.service';
-import { waitingbar, loadImage, canvasToFile } from '../../utils';
+import { waitingbar, loadImage, canvasToFile, USD } from '../../utils';
 
 class Pizza extends Component {
     constructor(props) {
@@ -148,16 +148,11 @@ class Pizza extends Component {
 
     calculatePrice() {
         let { size, ingredients } = this.state;
-        let price = 0;
-        ingredients = ingredients.filter(ingredient => ingredient.checked);
-        for (let ingredient of ingredients) price += ingredient.price;
-        switch (String(size)) 
-        {
-            case '30': price += 30; break;
-            case '45': price += 45; break;
-            case '60': price += 60; break;
-        }
-        return price;
+
+        let sum = 0;
+        for (let ingredient of ingredients) if (ingredient.checked) sum += ingredient.price;
+
+        return USD(size / 5 + sum);
     }
 
     render() {

@@ -5,6 +5,17 @@ import img_waiting from './style/img/waiting.gif';
 export const waitingbar = `<div id="waiting"><img src="${img_waiting}" alt="waiting"></div>`;
 
 /**
+ * Number to USD currency
+ * @param number
+ */
+export const USD = (number) => {
+	return new Intl.NumberFormat('en-US', { 
+		style: 'currency',
+		currency: 'USD', 
+	}).format(number).replace('$', '$ ');
+};
+
+/**
  * Create file from canvas
  * @param object canvas
  * @param string mimeType

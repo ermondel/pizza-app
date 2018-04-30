@@ -1,12 +1,12 @@
 /**
  * List Component
- * version 0.7
+ * version 0.71
  */
 import Component    from '../../component';
 import { AUTH }     from '../../services/auth.service';
 import { STOREAPI } from '../../api/store.api';
 import { ROUTER }   from '../../services/router.service';
-import { waitingbar } from '../../utils';
+import { waitingbar, USD } from '../../utils';
 import { getETA, minuteTimer, HHMMSS } from '../../utils/time';
 
 class List extends Component {
@@ -120,7 +120,7 @@ class List extends Component {
 		        	<time class="pizza-time"><span title="pizza create time">ct</span> <span class="time">${HHMMSS(pizza.created_date)}</span></time>
 		        	<div class="pizza-queue">#${pizzas.length - index}</div>
 		        	<div class="pizza-eta">${pizzaETA}</div>
-		        	<div class="pizza-price">$ ${pizza.price}</div>
+		        	<div class="pizza-price">${USD(pizza.price)}</div>
 	        	</div>`;
 			}).join('') + `</div>`;
 		} else {
