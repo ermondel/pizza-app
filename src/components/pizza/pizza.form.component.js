@@ -1,26 +1,22 @@
 /**
  * Pizza Form Component
- * version 0.52
- * props: size, ingredients, tags, price,
- * onChangeIngredient, onChangeTag, onChangeSize, onSubmit
+ * version 0.75
+ * props: size, ingredients, tags, price, errors
+ * onChangeIngredient, onChangeTag, onChangeSize, onSubmit, onErrorValidate
  */
-import Component from '../../component';
+import Component            from '../../component';
+import { validateElements } from '../../utils/util';
+import { pizzaFormRules }   from './pizza.form.rules';
 
 class PizzaForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            elements: {
-				name: '',
-				description: '',
-			},
-        };
-
         this.container = document.createElement('form');
         this.container.id = 'create';
         this.container.addEventListener('change', this.handlerChange.bind(this));
         this.container.addEventListener('submit', this.handlerSubmit.bind(this));
+        this.container.addEventListener('focusin', this.handlerFocus.bind(this));
     }
 
     handlerChange(e) {
@@ -41,11 +37,17 @@ class PizzaForm extends Component {
         const name = e.target.elements.name.value.trim();
         const description = e.target.elements.description.value.trim();
 
-        this.updateState({ 
-			elements: { name, description }
-		});
+        const res = validateElements(e.target.elements, pizzaFormRules);
 
-        this.props.onSubmit(name, description);
+        if (res.result) {
+            this.props.onSubmit(name, description);
+        } else {
+            this.props.onErrorValidate(res.errors);
+        }
+    }
+
+    handlerFocus(e) {
+		document.getElementById('form-errors').innerHTML = '';
     }
 
     renderIngredients() {
@@ -80,9 +82,14 @@ class PizzaForm extends Component {
         </label>`).join('');
     }
 
+    renderErrors() {
+        const { errors } = this.props;
+
+        return errors.length ? '<ul>' + errors.map(error => `<li>${error}</li>`).join('') + '</ul>' : '';
+    }
+
     render() {
-        const { size, price } = this.props;
-        const { name, description } = this.state.elements;
+        const { size, price, errors } = this.props;
 
         return `
         <div id="size-box">
@@ -96,11 +103,11 @@ class PizzaForm extends Component {
         <div id="text-box">
             <label>
                 <span>Pizza name *</span>
-                <input type="text" id="name" name="name" value="${name}">
+                <input type="text" id="name" name="name">
             </label>
             <label>
                 <span>Description</span>
-                <input type="text" id="description" name="description" value="${description}">
+                <input type="text" id="description" name="description">
             </label>
         </div>
         <div id="price-box">
@@ -108,7 +115,8 @@ class PizzaForm extends Component {
         </div>
         <div id="submit-box">
             <button class="box-radius-5 box-shadow-2">Submit</button>
-        </div>`;
+        </div>
+        <div id="form-errors" class="box-radius-5">${this.renderErrors()}</div>`;
     }
 }
 

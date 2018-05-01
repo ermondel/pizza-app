@@ -1,6 +1,6 @@
 /**
- * Main
- * version 1.8
+ * Main style
+ * version 1.9
  */
 html { background-color: #455A64; }
 body { font-family: Arial, sans-serif; font-size: 14px; color: black; background-color: white; }
@@ -157,11 +157,6 @@ footer { background-color: #455A64; color: white; }
 background-color: #89C040; margin-top: 45px; }
 #auth button:hover { background-color: #FF6600; }
 #auth button:focus { outline: none; background-color: #FF6600; }
-/* form errors */
-#auth #form-errors { margin-top: 35px; background-color: #455A64; color: white; }
-#auth #form-errors ul  { margin: 0; padding: 13px 15px; list-style: none; }
-#auth #form-errors li { margin: 0; padding: 5px 0px; }
-#auth #form-errors li li:before { content: '\2711'; margin-right: 5px; font-size: 1.1em; }
 
 /* Pizza create form
 ========================================================================== */
@@ -207,6 +202,13 @@ background-color: #efefef; cursor: pointer; float: left; border-radius: 3px; -mo
 background-color: #89C040; margin-top: 45px; }
 #create button:hover { background-color: #FF6600; }
 #create button:focus { outline: none; background-color: #FF6600; }
+
+/* Form errors messages
+========================================================================== */
+#form-errors { margin-top: 35px; background-color: #455A64; color: white; }
+#form-errors ul  { margin: 0; padding: 13px 15px; list-style: none; }
+#form-errors li { margin: 0; padding: 5px 0px; }
+#form-errors li li:before { content: '\2711'; margin-right: 5px; font-size: 1.1em; }
 
 /* .. in process ...
 ========================================================================== */

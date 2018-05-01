@@ -1,6 +1,6 @@
 /**
  * Pizza Component
- * version 0.93
+ * version 0.95
  */
 import Component    from '../../component';
 import PizzaForm    from './pizza.form.component';
@@ -20,6 +20,7 @@ class Pizza extends Component {
             tags        : [],
             pizza_sheet : null,
             waiting     : true,
+            errors      : [],
         };
 
         this.container = document.createElement('main');
@@ -32,6 +33,7 @@ class Pizza extends Component {
             onChangeTag: this.onChangeTag.bind(this),
             onChangeSize: this.onChangeSize.bind(this),
             onSubmit: this.onSubmit.bind(this),
+            onErrorValidate: this.onErrorValidate.bind(this),
         });
 
         this.canvas = document.createElement('canvas');
@@ -79,16 +81,20 @@ class Pizza extends Component {
 
     onChangeIngredient(id, checked) {
         const { ingredients } = this.state;
-        this.updateState({ ingredients: this.checkedById(ingredients, id, checked) });
+        this.updateState({ ingredients: this.checkedById(ingredients, id, checked), errors: [] });
     }
 
     onChangeTag(id, checked) {
         const { tags } = this.state;
-        this.updateState({ tags: this.checkedById(tags, id, checked) });
+        this.updateState({ tags: this.checkedById(tags, id, checked), errors: [] });
     }
 
     onChangeSize(size) {
-        this.updateState({ size });
+        this.updateState({ size, errors: [] });
+    }
+
+    onErrorValidate(errors) {
+        this.updateState({ errors });
     }
 
     onSubmit(name, description) {
@@ -98,10 +104,11 @@ class Pizza extends Component {
             if (response.success) {
                 ROUTER.navigateTo('/pizza/successful');
             } else {
-                console.log('app error', response.error);
+                this.updateState({ errors: response.validations, waiting: false });
             }
         }).catch(error => {
-            console.log('app error', error);
+            if (error.message == 'system') ROUTER.navigateTo('/503');
+            this.updateState({ errors: [ error.message ], waiting: false });
         });
     }
 
@@ -156,13 +163,13 @@ class Pizza extends Component {
     }
 
     render() {
-        const { size, ingredients, tags, pizza_sheet, waiting } = this.state;
+        const { size, ingredients, tags, pizza_sheet, waiting, errors } = this.state;
         
         const ingredientsChecked = ingredients.filter(ingredient => ingredient.checked);
         
         return !waiting ? [
             this.pizzaPane.update({ pizza_sheet, size, ingredients: ingredientsChecked }),
-            this.pizzaForm.update({ size, ingredients, tags, price: this.calculatePrice() }),
+            this.pizzaForm.update({ size, ingredients, tags, price: this.calculatePrice(), errors }),
         ] : waitingbar;
     }
 }

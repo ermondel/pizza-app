@@ -90,6 +90,15 @@ export const validateElements = (elements, rules) => {
 				res.errors.push(claim.equal.message);
 				continue;
 			}
+			if (claim.checked) {
+				let isChecked = false;
+        		for (let val of elements[prop].values()) isChecked |= val.checked;
+        		if (!isChecked) {
+					res.result = false;
+					res.errors.push(claim.checked.message);
+					continue;
+        		}
+			}
 		}
 	}
 
