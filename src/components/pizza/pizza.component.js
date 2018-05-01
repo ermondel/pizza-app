@@ -1,6 +1,6 @@
 /**
  * Pizza Component
- * version 0.95
+ * version 0.951
  */
 import Component    from '../../component';
 import PizzaForm    from './pizza.form.component';
@@ -98,6 +98,8 @@ class Pizza extends Component {
     }
 
     onSubmit(name, description) {
+        this.updateState({ waiting: true });
+
         canvasToFile(this.canvas).then(img => {
             return STOREAPI.create(AUTH.token, this.pizzaFormData(name, description, img));
         }).then(response => {
