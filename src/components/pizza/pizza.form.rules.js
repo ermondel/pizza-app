@@ -1,5 +1,8 @@
 export const pizzaFormRules = 
 {
+    ingredient: {
+        checked  : { rule: true,     message: 'Choose ingredients. Min 1. Max 6.' },
+    },
     name: {
         required : { rule: true,     message: "Name is required." },
         min      : { rule: 3,        message: 'Name is not valid. Min length is 3.' },
@@ -8,8 +11,5 @@ export const pizzaFormRules =
     },
     description: {
         max      : { rule: 124,      message: 'Description is not valid. Max length is 124.' },
-    },
-    ingredient: {
-        checked  : { rule: true,     message: 'Choose ingredients. Min 1. Max 6.' },
     },
 };

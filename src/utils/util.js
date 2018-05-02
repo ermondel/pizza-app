@@ -62,7 +62,7 @@ export const validateElements = (elements, rules) => {
 	for (let prop in rules) {
 		if (elements[prop]) 
 		{
-			let value = elements[prop].value.trim();
+			let value = elements[prop].value ? elements[prop].value.trim() : '';
 			let claim = rules[prop];
 			
 			if (claim.required && claim.required.rule === true && value.length < 1) {
@@ -92,7 +92,7 @@ export const validateElements = (elements, rules) => {
 			}
 			if (claim.checked) {
 				let isChecked = false;
-        		for (let val of elements[prop].values()) isChecked |= val.checked;
+        		for (let val of Array.prototype.slice.call(elements[prop])) isChecked |= val.checked;
         		if (!isChecked) {
 					res.result = false;
 					res.errors.push(claim.checked.message);
