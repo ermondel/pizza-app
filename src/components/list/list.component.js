@@ -1,6 +1,6 @@
 /**
  * List Component
- * version 0.71
+ * version 0.8
  */
 import Component    from '../../component';
 import { AUTH }     from '../../services/auth.service';
@@ -106,7 +106,7 @@ class List extends Component {
 		let content = '';
 
 		if (pizzas.length) {
-			content = `<div class="pizzas">` + pizzas.map((pizza, index) => {
+			content = pizzas.map((pizza, index) => {
 				let ETA = getETA(new Date(), pizza.time_prepared), pizzaETA = '';
 				pizzaETA = ETA.ready ? `<span class="${ETA.cssclass}">ready</span>` : `ETA: <span class="${ETA.cssclass}">${ETA.readable}</span>`;
 
@@ -122,12 +122,18 @@ class List extends Component {
 		        	<div class="pizza-eta">${pizzaETA}</div>
 		        	<div class="pizza-price">${USD(pizza.price)}</div>
 	        	</div>`;
-			}).join('') + `</div>`;
+			}).join('');
 		} else {
-			content = 'No pizzas in the queue.';
+			content = `
+				<div class="pizza">
+					<div class="pizza-btn-link">
+						<a href="#/pizza" tabindex="0" title="Add pizza"><span>+ Add</span></a>
+					</div>
+		        	<div class="pizza-no">No pizzas in the queue.</div>
+	        	</div>`;
 		}
 
-		return !waiting ? content : waitingbar;
+		return !waiting ? `<div class="pizzas">` + content + `</div>` : waitingbar;
 	}
 }
 
